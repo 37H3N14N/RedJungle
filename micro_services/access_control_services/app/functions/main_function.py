@@ -20,6 +20,7 @@ session = get_session()
 base_url = "http://redjungle-00.lab:7020"
 
 role_url = f"{base_url}/role"
+get_role_url = f"{base_url}/role"
 policy_url = f"{base_url}/policy"
 decision_log_url = f"{base_url}/decision-log"
 

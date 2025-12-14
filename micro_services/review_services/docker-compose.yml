@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   review_endpoint:
     build: .
@@ -6,7 +5,7 @@ services:
       - "7005:7005"
     volumes:
       - ./app:/app
-      - ./requirements.txt
+      - /requirements.txt
 
     command:
       [

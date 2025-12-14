@@ -6,7 +6,7 @@ services:
       - "7020:7020"
     volumes:
       - ./app:/app
-      - ./requirements.txt
+      - /requirements.txt
 
     command:
       [

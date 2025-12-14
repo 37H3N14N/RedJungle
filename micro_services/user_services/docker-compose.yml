@@ -1,4 +1,3 @@
-version: "3.8"
 services:
   user_endpoint:
     build: .
@@ -6,7 +5,7 @@ services:
       - "7080:7080"
     volumes:
       - ./app:/app
-      - ./requirements.txt
+      - /requirements.txt
 
     command:
       [
