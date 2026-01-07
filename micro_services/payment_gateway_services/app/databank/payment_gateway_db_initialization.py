@@ -30,11 +30,18 @@ class Base(DeclarativeBase):
 
 ########################  INTERMEDIATE TABLES  #################################
 
-Bank_Customer_Association = Table (
-    'bank_customer_association',
+Bank_Account_Association = Table (
+    'bank_account_association',
     Base.metadata,
     Column('bank_id', ForeignKey('bank_object.bank_id'), primary_key=True),
-    Column('bank_customer_id', ForeignKey('bank_customer_object.bank_customer_id'), primary_key=True)
+    Column('account_id', ForeignKey('account_object.account_id'), primary_key=True)
+)
+
+Customer_Account_Association = Table (
+    'customer_account_association',
+    Base.metadata,
+    Column('customer_id', ForeignKey('customer_object.customer_id'), primary_key=True),
+    Column('account_id', ForeignKey('account_object.account_id'), primary_key=True)
 )
 
 ########################## TABLE INITIALIZATION ###########################
@@ -45,14 +52,9 @@ class Transaction_Object(Base):
     transaction_id: Mapped[str]= mapped_column(String, primary_key=True)
     user_id: Mapped[str]= mapped_column(String)
     tenant_id: Mapped[str]= mapped_column(String)
+    card_number: Mapped[str] = mapped_column(BigInteger)
     amount: Mapped[float]= mapped_column(Float)
-    status: Mapped[str]= mapped_column(String)
-    bank_customer_id: Mapped[str]= mapped_column(ForeignKey('bank_customer_object.bank_customer_id'))
-    card_brand: Mapped[str]= mapped_column(String)
-    card_last_four_digits: Mapped[str]= mapped_column(Integer)
     created_at: Mapped[str]= mapped_column(String)
-
-    transaction_bank_wormhole: Mapped['Bank_Object'] = relationship(back_populates='bank_transaction_wormhole')
 
 
 class Bank_Object(Base):
@@ -61,25 +63,40 @@ class Bank_Object(Base):
     bank_id: Mapped[str] = mapped_column(String, primary_key=True)
     bank_name: Mapped[str] = mapped_column(String)
 
-    customers: Mapped[List['Bank_Customer_Object']] = relationship(
-        secondary= Bank_Customer_Association,
+    accounts: Mapped[List['Account_Object']] = relationship(
+        secondary= Bank_Account_Association,
         back_populates= 'banks'
     )
 
 
-class Bank_Customer_Object(Base):
-    __tablename__ = 'bank_customer_object'
+class Account_Object(Base):
+    __tablename__ = 'account_object'
 
-    bank_customer_id: Mapped[str] = mapped_column(String, primary_key=True)
-    user_id: Mapped[str] = mapped_column(String)
-    card_brand: Mapped[str] = mapped_column(String)
-    card_number: Mapped[str] = mapped_column(BigInteger)
-    card_expiration_date: Mapped[str] = mapped_column(String)
+    account_id: Mapped[str] = mapped_column(String, primary_key=True)
+    bank_id: Mapped[str] = mapped_column(String)
+    card_number: Mapped[str] = mapped_column(BigInteger, unique=True)
     account_balance: Mapped[str] = mapped_column(Float)
     updated_at: Mapped[str] = mapped_column(String)
 
     banks: Mapped[List['Bank_Object']] = relationship(
-        secondary= Bank_Customer_Association,
+        secondary= Bank_Account_Association,
+        back_populates= 'accounts'
+    )
+
+    customers: Mapped[List['Customer_Object']] = relationship(
+        secondary= Customer_Account_Association,
+        back_populates= 'accounts'
+    )
+
+
+class Customer_Object(Base):
+    __tablename__ = 'customer_object'
+
+    customer_id: Mapped[str] = mapped_column(String, primary_key=True)
+    user_id: Mapped[str] = mapped_column(String)
+
+    accounts: Mapped[List['Account_Object']] = relationship(
+        secondary= Customer_Account_Association,
         back_populates= 'customers'
     )
 

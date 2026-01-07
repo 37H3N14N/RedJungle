@@ -4,29 +4,31 @@ class Transaction_Object(BaseModel):
     transaction_id: str
     user_id: str
     tenant_id: str
+    card_number: int
     amount: float
-    status: str
-    bank_id: str
-    card_brand: str 
-    card_last_four_digits: int
     created_at: str
 
 
 class Bank_Object(BaseModel):
     bank_id: str
     bank_name: str
-    customers: list
+    accounts: list
 
 
-class Bank_Customer_Object(BaseModel):
-    bank_customer_id: str
-    user_id: str
-    card_brand: str
-    card_number: str
-    card_expiration_date: str
+class Account_Object(BaseModel):
+    account_id: str
+    bank_id: str
+    card_number: int
     account_balance: float
     updated_at: str
+    customers: list
     banks: list
+
+
+class Customer_Object(BaseModel):
+    customer_id: str
+    user_id: str
+    accounts: list
 
 
 class Incoming_Data(BaseModel):

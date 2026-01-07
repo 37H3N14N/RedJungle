@@ -54,13 +54,7 @@ service_object = [
         "service_id":"#11",
         "service_name":"analytics",
         "endpoint": "7090"
-    },
-    {
-        "service_id":"#12",
-        "service_name":"audit_logging",
-        "endpoint": "7095"
     }
-
 
 ]
 
