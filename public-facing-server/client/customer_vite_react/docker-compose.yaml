@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  customer_frontend:
+    build: .
+    ports:
+      - "4090:4090"
+    volumes:
+      - ./customer_front_end:/app
+      - /app/node_modules
+
+
+
+

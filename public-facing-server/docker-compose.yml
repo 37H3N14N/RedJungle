@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # Express Backend Service
+  server:
+    build:
+      context: ./server
+      dockerfile: dockerfile
+    container_name: express-backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/app
+      - /app/node_modules # This line is critical to prevent host node_modules from overriding the container's
+    command: npm run dev
+
+  # React Frontend Service
+  client:
+    build:
+      context: ./client
+      dockerfile: dockerfile
+    container_name: react-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client/app:/app
+      - /app/node_modules

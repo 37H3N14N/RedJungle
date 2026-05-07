@@ -1,0 +1,107 @@
+.main_div_login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15%;
+    margin-left: 27%;
+    background-color: rgba(90, 100, 116, 0.548);
+    padding: 7%;
+    box-sizing: border-box;
+    border-radius: 10px;
+    max-width: 40%;
+    max-height: 50%;
+    width: 40%;
+    height: 50%;
+}
+.login_div_message{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 28px;
+    font-weight: bolder;
+    max-height: 10%;
+    max-width: 100%;
+    height: 10%;
+    width: 100%;
+}
+.tenant_and_hotel_div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    box-sizing: border-box;
+    max-height: 15%;
+    max-width: 100%;
+    height: 15%;
+    width: 100%;
+}
+.column_and_title_login{
+    display: flex;
+    align-items: center;
+}
+.login_column_name_title{
+    color: rgb(9, 181, 211);
+    font-size: large;
+    font-weight: bold;
+}
+.tenant_name_div{
+    color: rgb(7, 150, 150);
+    font-size: medium;
+    font-weight: bold;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+.tenant_hotel_name_div{
+    color: rgb(7, 150, 150);
+    font-size: medium;
+    font-weight: bold;
+}
+.login_input_section_div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 20px;
+    box-sizing: border-box;
+    max-height: 50%;
+    max-width: 100%;
+    height: 50%;
+    width: 100%;
+}
+.login_input_section_div > input{
+    padding: 5px;
+    font-size: medium;
+    box-sizing: border-box;
+    max-height: 40%;
+    max-width: 100%;
+    height: 40%;
+    width: 100%;
+}
+.login_button_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 30%;
+    max-width: 100%;
+    height: 30%;
+    width: 100%;
+}
+.login_submit_button{
+    color: white;
+    font-weight: bold;
+    font-size: medium;
+    border: none;
+    border-radius: 5px;
+    background-color: black;
+    max-height: 70%;
+    max-width: 100%;
+    height: 70%;
+    width: 100%;
+    cursor: pointer;
+}
+.login_submit_button:hover{
+    color: rgb(10, 241, 10);
+}
+
+
+
