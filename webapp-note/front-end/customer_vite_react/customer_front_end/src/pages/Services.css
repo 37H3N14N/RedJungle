@@ -1,0 +1,10 @@
+.main_div_services{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  overflow-y: auto;
+  max-height: 100%;
+  max-width: 100%;
+  height: 100%;
+  width: 100%;
+}

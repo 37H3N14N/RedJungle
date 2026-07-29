@@ -1,0 +1,81 @@
+.main_div_login{
+    display: flex;
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+.login_tablet{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 80%;
+    width: 80%;
+    background-color: #bcbadbce;
+    border-radius: 1rem;
+    box-shadow: 3px 3px 100px #13c4a6;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid rgb(179, 176, 176);
+}
+.sub_login_tablet_one{
+    position: relative;
+    text-align: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 50%;
+    border-radius: inherit;
+    background-image: url(../images/shot_2.png);
+    box-shadow: 5px 5px 30px grey;
+    object-fit: cover;
+}
+.upper_sub_login_tablet_one{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height:10%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.hotel_name{
+    color: white;
+    font-weight: bold;
+    margin: 10px;
+}
+.back_button{
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(211, 211, 245, 0.404);
+    margin-right: 2%;
+    height: 60%;
+    width: 20%;
+    border: none;
+    font-weight: bold;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+.back_button:hover{
+    box-shadow: 2px 2px 20px rgb(54, 51, 51);
+}
+.lower_sub_login_tablet_one{
+    color: white;
+    position: absolute;
+    bottom: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px;
+    justify-content: center;
+}
+.sub_login_tablet_two{
+    height: 100%;
+    width: 50%;
+    margin-left: 10px;
+    border-radius: inherit;
+}
+
+
+
+

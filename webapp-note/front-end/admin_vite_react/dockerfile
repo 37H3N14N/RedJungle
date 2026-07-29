@@ -1,0 +1,15 @@
+FROM node:24-alpine
+
+WORKDIR /app
+
+COPY ./admin_front_end/package*.json ./
+
+RUN npm install
+
+COPY ./admin_front_end ./
+
+EXPOSE 4080
+
+CMD ["npm","run","dev","--","--host"]
+
+

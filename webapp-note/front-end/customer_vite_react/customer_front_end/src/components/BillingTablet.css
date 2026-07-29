@@ -1,0 +1,31 @@
+.individual_transaction{
+    position: relative;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    padding: 1%;
+    margin-top: 15px;
+    box-sizing: border-box;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(16, 17, 19, 0.514);
+    max-width: 100%;
+    max-height: 5%;
+    min-height: fit-content;
+    width: 100%;
+    height: 5%;
+
+}
+
+.data_id_pair{
+    display: flex;
+    justify-content: space-between;
+}
+.column_name_billing{
+    color: rgb(5, 179, 170);
+    font-size: medium;
+    font-weight: 400;
+}
+
+
+

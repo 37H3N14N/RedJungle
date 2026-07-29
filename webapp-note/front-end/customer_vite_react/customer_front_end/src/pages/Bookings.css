@@ -1,0 +1,11 @@
+.main_div_booking{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    overflow-y: auto;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+
+

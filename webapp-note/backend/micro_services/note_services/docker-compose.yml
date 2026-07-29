@@ -1,0 +1,24 @@
+services:
+  review_endpoint:
+    build: .
+    ports:
+      - "7005:7005"
+    volumes:
+      - ./app:/app
+      - /requirements.txt
+
+    command:
+      [
+        "uvicorn",   
+        "main_review:app",   
+        "--reload",
+        "--port",   
+        "7005",   
+        "--host",   
+        "0.0.0.0"
+      ]
+
+
+
+
+

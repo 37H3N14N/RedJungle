@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  admin_frontend:
+    build: .
+    ports:
+      - "4080:4080"
+    volumes:
+      - ./admin_front_end:/app
+      - /app/node_modules
+
+
+
+

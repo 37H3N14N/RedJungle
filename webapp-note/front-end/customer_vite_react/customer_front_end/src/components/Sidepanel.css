@@ -1,0 +1,28 @@
+.side_panel_div{
+    position: sticky;
+    left: 0;
+    max-width: 250px;
+    min-width: 120px;
+    width: 25%;
+    height: 100%;
+    max-height: 100%;
+    background-color: rgba(0, 0, 0, 0.993);
+    border-right: 0.5px solid rgb(104, 102, 102);
+    box-sizing: border-box;
+}
+.side_panel_button{
+    display: block;
+    font-size: medium;
+    color: white;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    min-height: fit-content;
+    max-height: 100px;
+    height: 8%;
+    cursor: pointer;
+}
+.side_panel_button:hover{
+    background-color: whitesmoke;
+    color: black;
+}

@@ -1,0 +1,24 @@
+services:
+  user_endpoint:
+    build: .
+    ports:
+      - "7080:7080"
+    volumes:
+      - ./app:/app
+      - /requirements.txt
+
+    command:
+      [
+        "uvicorn",   
+        "main_user:app",   
+        "--reload",
+        "--port",   
+        "7080",   
+        "--host",   
+        "0.0.0.0"
+      ]
+
+
+
+
+
