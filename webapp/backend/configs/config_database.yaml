@@ -1,0 +1,61 @@
+traffic_gateway_microservice:
+  database:
+    db_username: invinsible
+    db_passcode: $omniman#
+    db_url: localhost
+    db_port: 9011
+    db_name: traffic_gateway_db
+
+
+identity_microservice:
+  database:
+    db_username: invinsible
+    db_passcode: $omniman#
+    db_url: localhost
+    db_port: 9012
+    db_name: identity_db
+
+
+hierarchy_record_microservice:
+  database:
+    db_username: invinsible
+    db_passcode: $omniman#
+    db_url: localhost
+    db_port: 9013
+    db_name: hierarchy_record_db
+
+
+  
+member_relation_microservice:
+  database:
+    db_username: invinsible
+    db_passcode: $omniman#
+    db_url: localhost
+    db_port: 9014
+    db_name: member_relation_db
+
+  
+  
+note_microservice:
+  database:
+    db_username: invinsible
+    db_passcode: $omniman#
+    db_url: localhost
+    db_port: 9015
+    db_name: note_db
+  
+  
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
