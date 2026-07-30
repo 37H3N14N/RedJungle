@@ -1,5 +1,5 @@
 ---------------------------
-    [NOTE] 
+    [   NOTE    ] 
 ---------------------------
 
 > /group/
@@ -13,7 +13,9 @@ Options
 = /detail
 = crud option for all endpoints 
 
-////////////// Role Features ///////////////
+---------------------------
+    Role Features 
+---------------------------
 
 > Group Creator
 - make folder private/public
@@ -45,7 +47,7 @@ Options
 
 
 -----------------------------
-    [ Functions ]
+     Functions 
 -----------------------------
 
 
