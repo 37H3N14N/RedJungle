@@ -1,0 +1,50 @@
+.main_crud_container{
+    height: 30%;
+    width: 100%;
+}
+
+.crud_container_one,
+.crud_container_three,
+.crud_container_two{
+    display: flex;
+    justify-content: space-between;
+    height: 30%;
+    width: 100%;
+}
+
+
+.crud_container_one button,
+.crud_container_two button{
+    height: 80%;
+    width: 25%;
+}
+
+
+.crud_container_one input{
+    height: 80%;
+    width: 70%;
+    margin: 0;
+}
+
+.crud_container_two select{
+    height: 80%;
+    width: 70%;
+    background-color: black;
+    color: red;
+    font-weight: bold;
+
+}
+
+.crud_container_three button{
+  height: 70%;
+  width: 80%;
+
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,52 @@
+body{
+    height: inherit;
+    width: inherit;
+}
+.main_note_container{
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.content_navbar_container{
+    background-color: rgba(128, 128, 128, 0.424);
+    height: 4%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.content_navbar_container button{
+    max-height: 40px;
+    max-width: 120px;
+    height: 80%;
+    width: 30%;
+    box-sizing: border-box;
+
+}
+
+.content_area_container{
+    height: 95%;
+    width: 100%;
+    border-radius: 5px;
+    color: rgb(3, 245, 132);
+}
+
+/* */
+button{
+    cursor: pointer;
+    background-color: transparent;
+    color: rgb(16, 182, 190);
+    box-shadow: black 2px 2px 10px;
+    border-radius: 5px;
+    font-size: small;
+    font-weight: bold;
+}
+/* */
+
+
+
+

@@ -1,0 +1,220 @@
+body{
+    background-color: rgb(18, 25, 25);
+    height: 100vh;
+    width: 100vw;
+    padding: 0;
+    margin: 0;
+}
+
+/* */
+
+.main_app_container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 2px;
+}
+
+/* */
+
+.primary_container{
+    background-color: rgba(42, 14, 14, 0.549);
+    box-sizing: border-box;
+    padding: 2px;
+    height: 5%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.secondary_container{
+    box-sizing: border-box;
+    padding: 2px;
+    height: 95vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between; 
+
+}
+
+/* */
+.dir_project_name{
+    height: 100%;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: gold;
+    font-weight: bolder;
+}
+.database_overall_stats{
+    height: 100%;
+    width: 30%;
+    box-sizing: border-box;
+    padding: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.current_workspace_initials{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* */
+.workspace_title{
+    color: rgb(224, 6, 224);
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+}
+/* */
+.group_count_stat{
+    color: red;
+}
+.note_count_stat{
+    color: blue;
+}
+.folder_count_stat{
+    color: rgb(5, 245, 5);
+}
+
+/* */
+
+.left_main_container{
+    box-sizing: border-box;
+    padding: 2px;
+    height: 100%;
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: space-between;
+}
+
+.center_main_container{
+    box-sizing: border-box;
+    padding: 2px;
+    height: 100%;
+    width: 74%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* */
+
+.right_main_container{
+    box-sizing: border-box;
+    padding: 2px;
+    height: 100%;
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 4px;
+}
+
+/* */
+.group_container{
+    background-color: rgba(29, 98, 53, 0.172);
+    align-items: center;
+    height: 49%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 4px;
+    border-radius: 5px;
+
+}
+
+/* */
+.folder_container{
+    background-color: rgba(29, 98, 53, 0.172);
+    align-items: center;
+    height: 49%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 4px;
+    border-radius: 5px;
+
+}
+
+/* */
+.notes_container{
+    background-color: rgba(29, 98, 53, 0.172);
+    align-items: center;
+    height: 70%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+
+}
+
+/* */
+.group_container_window,
+.folder_container_window{
+    height: 70%;
+    width: 100%;
+}
+
+/* */
+.nav_buttons{
+    background-color: rgba(128, 128, 128, 0.424);
+    align-items: center;
+    height: 29%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 5px;
+
+
+}
+
+.button_group{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.button_group button{
+    min-width: fit-content;
+    min-height: fit-content;
+    width: 45%;
+    height: 25%;
+    box-sizing: border-box;
+    padding: 2px;
+}
+
+/* */
+button{
+    cursor: pointer;
+    background-color: transparent;
+    color: rgb(16, 182, 190);
+    box-shadow: black 2px 2px 10px;
+    border-radius: 5px;
+    font-size: small;
+    font-weight: bold;
+}
+/* */
+
+
+
+
+
+
+

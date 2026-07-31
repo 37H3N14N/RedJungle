@@ -18,22 +18,27 @@ Options
 ---------------------------
 
 > Group Creator
+- make group private/public
 - make folder private/public
-- visiblity of everything in group
 - apoint folder admin
 - crud folders
+- visibility of everything
 
 > Folder Admin 
-- make folder private/public
-- visibility of all note in folder
-- un/suspend folder members
+- visibility of notes in folder
+- add/revoke members to/from folder 
 - delete member notes
 
 > Member
+- make own notes private 
+- revoke members from note
 - visibility of private group
 - visibility of private invited folder
-- make chat private 
-- crud note
+
+> Anyone
+- crud note 
+- automatic backed notes on user private group 
+
 
 > Public Groups/Folder
 - read by anyone only for the public content within
@@ -42,8 +47,8 @@ Options
 - read only by the curated members
 
 > Private Notes
-- read by folder members
-- read by group owner
+- read by curated folder members
+- read by group owner and folder admin
 
 
 -----------------------------
