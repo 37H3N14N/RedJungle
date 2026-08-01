@@ -16,14 +16,34 @@ body{
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
-.content_navbar_container button{
+.content_input_area {
+    height: 100%;
+    width: 40%;
+    display: flex;
+    align-items: center;
+}
+.content_input_area input{
+    width: 90%;
+    height: 70%;
+}
+
+.content_universal_control {
+    height: 100%;
+    width: 60%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.content_universal_control button{
     max-height: 40px;
     max-width: 120px;
     height: 80%;
-    width: 30%;
+    width: 35%;
     box-sizing: border-box;
 
 }

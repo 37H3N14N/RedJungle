@@ -57,7 +57,7 @@ export default function Home() {
       </div>
 
       <div className="center_main_container">
-        <AdminPanel/>
+        <NoteViewPage/>
       </div>
 
       <div className="right_main_container">
