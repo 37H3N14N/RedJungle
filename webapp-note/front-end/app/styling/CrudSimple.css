@@ -17,6 +17,7 @@
 .crud_container_two button{
     height: 80%;
     width: 25%;
+    min-width: fit-content;
 }
 
 

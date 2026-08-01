@@ -57,7 +57,7 @@ export default function Home() {
       </div>
 
       <div className="center_main_container">
-        <NoteViewPage/>
+        <AdminPanel/>
       </div>
 
       <div className="right_main_container">
@@ -84,12 +84,12 @@ export default function Home() {
           </div>
 
           <div className="button_group">
-            <button>M.NOTES</button>
-            <button>M.FOLDERS</button>
+            <button>M.NOTE</button>
+            <button>M.FOLDER</button>
           </div>
 
           <div className="button_group">
-            <button>M.GROUPS</button>
+            <button>M.GROUP</button>
           </div>
 
         </div>
