@@ -51,24 +51,6 @@ Options
 - read by group owner and folder admin
 
 
------------------------------
-     Functions 
------------------------------
-
-
-- resolve identity
-- resource data retrieval
-- user resource crud authorization
-- resource authorization
-- cache system
-- internal trust system 
-- hierarchy check
-- resource existance
-- resource visibility
-- check ownership
-- resource manipulation
-
-
 ----------------------
     Database 
 ----------------------
