@@ -1,4 +1,3 @@
-from model import Incoming_Payload
 from  fastapi import FastAPI
 import sqlalchemy
 import psycopg2
