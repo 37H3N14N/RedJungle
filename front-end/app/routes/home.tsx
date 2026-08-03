@@ -13,7 +13,7 @@ export default function Home() {
    <div className="main_app_container">
 
     <div className="primary_container">
-      <div className="dir_project_name">REDJUNGLE-[ WEBNOTE ]</div>
+      <div className="dir_project_name">[ REDJUNGLE ]</div>
 
       <div className="current_workspace_initials">
         <div className="workspace_title">ADMIN</div>
