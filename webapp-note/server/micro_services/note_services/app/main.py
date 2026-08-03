@@ -1,5 +1,4 @@
 from  fastapi import FastAPI
-from models.review_models import Incoming_Data
 import sqlalchemy
 import psycopg2
 import json
@@ -9,45 +8,42 @@ app = FastAPI()
 #####################################################################
 
 
-@app.get("/note/{param_a}")
-def get_group_member(param_a, data: Incoming_Data):
+@app.get("/note-data/")
+def get_group_member(selection_type: str = 'all',session_id: str = ''):
 
-    if param_a == 'all':
+    if selection_type == 'single':
         http_response = {
-            "endpoint": 'get all notes',
-            "echo_data": data
+            "endpoint": 'get single note-data',
         }
         return  http_response 
 
-    if param_a == None:
-        http_response = {
-            "endpoint": 'get single note',
-            "echo_data": data
-        }
-        return  http_response 
+    http_response = {
+        "endpoint": 'get all note-datas',
+    }
+    return  http_response 
 
 
-@app.post("/note/{param_a}")
-def manage_group_member(param_a, data: Incoming_Data):
+@app.post("/note-data/{action}")
+def manage_group_member(action, data: dict):
     
-    if param_a == 'create':
+    if action == 'create':
         http_response = {
             "endpoint": 'create note',
-            "echo_data": data
+            "data_pack": data
         }
         return  http_response 
 
-    if param_a == 'update':
+    if action == 'update':
         http_response = {
             "endpoint": 'update note',
-            "echo_data": data
+            "data_pack": data
         }
         return  http_response 
 
-    if param_a == 'delete':
+    if action == 'delete':
         http_response = {
             "endpoint": 'delete note',
-            "echo_data": data
+            "data_pack": data
         }
         return  http_response 
 

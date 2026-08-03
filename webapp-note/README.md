@@ -94,42 +94,33 @@ Options
 { member_id ,Note_id}
 
 
------------------------------
-    CURLS 
------------------------------
 
-NB: Mostly using Get request with special headers to allow for quasi post requests for simplicity but covers everything .... remember this is the rugged-jungle[RJ]
+---------------------------------------------
+---------------------------------------------
+> Admin features:
+- members of said folder/group/Notes
+- the said documents
+- Revoke a users access
+- Add user as member
 
-curl
--H 'userid: u_5'
--H 'item_id: ch_01'
--H 'action: read'
-http://localhost:5000/chat/detail 
-= one/all chats in the folder of user
+> Note View
+- Delete
+- Update
 
-
-curl
--H 'userid: u_5'
--H 'item_id: f_2'
--H 'action: read'
-http://localhost:5000/folder/detail or contents
-= all chats in the folder
+> User
+- Private programs involved
+- user name and possible change update
+- create Note { 'select' Group Folder }
 
 
-curl
--H 'userid: u_5'
--H 'item_id: g_3'
--H 'action: read'
-http://localhost:5000/group/detail or contents
-= group details
-= all folders in the group
+admin:
+> Normal / Admins / 
+
+> Public / Group / Folder / Note
+
+> Add / Revoke / Demote / Upgrade { Follows Chain for both actions }
 
 
-curl
--H 'userid: u_5'
--H 'item_id: g_3'
--H 'action: read'
-http://localhost:5000/home
-= all groups
+
 
 

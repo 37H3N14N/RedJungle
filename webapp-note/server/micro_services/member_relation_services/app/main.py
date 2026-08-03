@@ -1,5 +1,4 @@
 from  fastapi import FastAPI
-from models.room_models import Incoming_Data
 import sqlalchemy
 import psycopg2
 import json
@@ -9,175 +8,163 @@ app = FastAPI()
 #####################################################################
 
 
-@app.get("/member/group/{param_a}")
-def get_group_member(param_a, data: Incoming_Data):
+@app.get("/member/group/")
+def get_group_member(selection_type: str = 'all',session_id: str = ''):
 
-    if param_a == 'all':
+    if selection_type == 'single':
         http_response = {
-            "endpoint": 'get all groups',
-            "echo_data": data
+            "endpoint": 'get single group member',
         }
         return  http_response 
 
-    if param_a == None:
-        http_response = {
-            "endpoint": 'get single group',
-            "echo_data": data
-        }
-        return  http_response 
+    http_response = {
+        "endpoint": 'get all group members',
+    }
+    return  http_response 
 
 
-@app.post("/member/group/{param_a}")
-def manage_group_member(param_a, data: Incoming_Data):
+@app.post("/member/group/{action}")
+def manage_group_member(action, data: dict):
     
-    if param_a == 'create':
+    if action == 'create':
         http_response = {
-            "endpoint": 'create group',
+            "endpoint": 'create group member',
             "echo_data": data
         }
         return  http_response 
 
-    if param_a == 'update':
+    if action == 'update':
         http_response = {
-            "endpoint": 'update group',
+            "endpoint": 'update group member',
             "echo_data": data
         }
         return  http_response 
 
-    if param_a == 'delete':
+    if action == 'delete':
         http_response = {
-            "endpoint": 'delete group',
-            "echo_data": data
-        }
-        return  http_response 
-
-
-@app.get("/member/super/{param_a}")
-def get_super_member(param_a, data: Incoming_Data):
-
-    if param_a == 'all':
-        http_response = {
-            "endpoint": 'get all folders',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if param_a == None:
-        http_response = {
-            "endpoint": 'get single folder',
+            "endpoint": 'delete group member',
             "echo_data": data
         }
         return  http_response 
 
 
-@app.post("/member/super/{param_a}")
-def manage_super_member(param_a, data: Incoming_Data):
+@app.get("/member/super/")
+def get_super_member(selection_type: str = 'all',session_id: str = ''):
+
+    if selection_type == 'single':
+        http_response = {
+            "endpoint": 'get single super members',
+        }
+        return  http_response 
+
+    http_response = {
+        "endpoint": 'get all super members',
+    }
+    return  http_response 
+
+
+@app.post("/member/super/{action}")
+def manage_super_member(action, data: dict):
     
-    if param_a == 'create':
+    if action == 'create':
         http_response = {
-            "endpoint": 'create folder',
+            "endpoint": 'create super member ',
             "echo_data": data
         }
         return  http_response 
 
-    if param_a == 'update':
+    if action == 'update':
         http_response = {
-            "endpoint": 'update folder',
+            "endpoint": 'update super member ',
             "echo_data": data
         }
         return  http_response 
 
-    if param_a == 'delete':
+    if action == 'delete':
         http_response = {
-            "endpoint": 'delete folder',
-            "echo_data": data
-        }
-        return  http_response 
-
-
-
-@app.get("/member/folder/{param_a}")
-def get_folder_member(param_a, data: Incoming_Data):
-
-    if param_a == 'all':
-        http_response = {
-            "endpoint": 'get all folders',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if param_a == None:
-        http_response = {
-            "endpoint": 'get single folder',
+            "endpoint": 'delete super member ',
             "echo_data": data
         }
         return  http_response 
 
 
-@app.post("/member/folder/{param_a}")
-def manage_folder_member(param_a, data: Incoming_Data):
+
+@app.get("/member/folder/")
+def get_folder_member(selection_type: str = 'all',session_id: str = ''):
+
+    if selection_type == 'single':
+        http_response = {
+            "endpoint": 'get single folder members',
+        }
+        return  http_response 
+
+    http_response = {
+        "endpoint": 'get all folders members',
+    }
+    return  http_response 
+
+
+@app.post("/member/folder/{action}")
+def manage_folder_member(action, data: dict):
     
-    if param_a == 'create':
+    if action == 'create':
         http_response = {
-            "endpoint": 'create folder',
+            "endpoint": 'create folder member',
             "echo_data": data
         }
         return  http_response 
 
-    if param_a == 'update':
+    if action == 'update':
         http_response = {
-            "endpoint": 'update folder',
+            "endpoint": 'update folder member',
             "echo_data": data
         }
         return  http_response 
 
-    if param_a == 'delete':
+    if action == 'delete':
         http_response = {
-            "endpoint": 'delete folder',
-            "echo_data": data
-        }
-        return  http_response 
-
-
-
-@app.get("/member/note/{param_a}")
-def get_note_member(param_a, data: Incoming_Data):
-
-    if param_a == 'all':
-        http_response = {
-            "endpoint": 'get all folders',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if param_a == None:
-        http_response = {
-            "endpoint": 'get single folder',
+            "endpoint": 'delete folder member',
             "echo_data": data
         }
         return  http_response 
 
 
-@app.post("/member/note/{param_a}")
-def manage_note_member(param_a, data: Incoming_Data):
+
+@app.get("/member/note/")
+def get_note_member(selection_type: str = 'all',session_id: str = ''):
+
+    if selection_type == 'single':
+        http_response = {
+            "endpoint": 'get single note member',
+        }
+        return  http_response 
+
+    http_response = {
+        "endpoint": 'get all note members',
+    }
+    return  http_response 
+
+
+@app.post("/member/note/{action}")
+def manage_note_member(action, data: dict):
     
-    if param_a == 'create':
+    if action == 'create':
         http_response = {
-            "endpoint": 'create folder',
+            "endpoint": 'create note member',
             "echo_data": data
         }
         return  http_response 
 
-    if param_a == 'update':
+    if action == 'update':
         http_response = {
-            "endpoint": 'update folder',
+            "endpoint": 'update note member',
             "echo_data": data
         }
         return  http_response 
 
-    if param_a == 'delete':
+    if action == 'delete':
         http_response = {
-            "endpoint": 'delete folder',
+            "endpoint": 'delete note member',
             "echo_data": data
         }
         return  http_response 

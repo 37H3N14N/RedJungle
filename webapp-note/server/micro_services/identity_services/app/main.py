@@ -1,54 +1,47 @@
-from models import Incoming_Data
 from fastapi import FastAPI
 import sqlalchemy
 import psycopg2
 import json
 
 #####################################################################
-from functions.main_function import create_new_user
-from functions.main_function import get_user
-
-#####################################################################
 app = FastAPI()
 #####################################################################
 
 
-@app.get("/user/{param_a}")
-def get_user(param_a, data: Incoming_Data):
+@app.get("/user/")
+def get_user(selection_type: str = 'all',session_id: str = ''):
 
-    if param_a == 'all':
-        http_response = {
-            "endpoint": 'get all users',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if param_a == None:
+    if selection_type == 'single':
         http_response = {
             "endpoint": 'get single user',
-            "echo_data": data
         }
         return  http_response 
 
+    http_response = {
+        "endpoint": 'get all users',
+    }
+    return  http_response 
 
-@app.post("/user/{param_a}")
-def manage_user(param_a, data: Incoming_Data):
+
+
+@app.post("/user/{action}")
+def manage_user(action, data: dict):
     
-    if param_a == 'create':
+    if action == 'create':
         http_response = {
             "endpoint": 'create user',
             "echo_data": data
         }
         return  http_response 
 
-    if param_a == 'update':
+    if action == 'update':
         http_response = {
             "endpoint": 'update user',
             "echo_data": data
         }
         return  http_response 
 
-    if param_a == 'delete':
+    if action == 'delete':
         http_response = {
             "endpoint": 'delete user',
             "echo_data": data
@@ -58,28 +51,26 @@ def manage_user(param_a, data: Incoming_Data):
 
 
 
-@app.get("/session/{param_a}")
-def get_session(param_a, data: Incoming_Data):
+@app.get("/session/")
+def get_session(selection_type: str = 'all',session_id: str = ''):
 
-    if param_a == 'all':
-        http_response = {
-            "endpoint": 'get all sessions',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if param_a == None:
+    if selection_type == 'single':
         http_response = {
             "endpoint": 'get single session',
-            "echo_data": data
         }
         return  http_response 
 
+    http_response = {
+        "endpoint": 'get all sessions',
+    }
+    return  http_response 
 
-@app.post("/session/{param_a}")
-def manage_session(param_a, data: Incoming_Data):
+
+
+@app.post("/session/{action}")
+def manage_session(action, data: dict):
     
-    if param_a == 'create':
+    if action == 'create':
         http_response = {
             "endpoint": 'create session',
             "echo_data": data
@@ -87,7 +78,7 @@ def manage_session(param_a, data: Incoming_Data):
         return  http_response 
 
 
-    if param_a == 'delete':
+    if action == 'delete':
         http_response = {
             "endpoint": 'delete session',
             "echo_data": data

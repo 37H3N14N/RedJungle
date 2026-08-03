@@ -53,20 +53,19 @@ def manage_group(action, data: dict):
         return 'Page is non existant'
 
 
-@app.get("/folder/{action}")
-def get_folder(action, data: str):
+@app.get("/folder/")
+def get_folder(selection_type: str = 'all',session_id: str = ''):
 
-    if action == 'all':
-        http_response = {
-            "endpoint": 'get all folders',
-        }
-        return  http_response 
-
-    if action == None:
+    if selection_type == 'single':
         http_response = {
             "endpoint": 'get single folder',
         }
         return  http_response 
+
+    http_response = {
+        "endpoint": 'get all folders',
+    }
+    return  http_response 
 
 
 @app.post("/folder/{action}")
@@ -92,24 +91,23 @@ def manage_folder(action, data: str):
 
 
 
-@app.get("/note/{action}")
-def get_folder(action, data: str):
+@app.get("/note/")
+def get_note(selection_type: str = 'all',session_id: str = ''):
 
-    if action == 'all':
+    if selection_type == 'single':
         http_response = {
-            "endpoint": 'get all notes',
+            "endpoint": 'get single note ',
         }
         return  http_response 
 
-    if action == None:
-        http_response = {
-            "echo_data": data
-        }
-        return  http_response 
+    http_response = {
+        "endpoint": 'get all notes',
+    }
+    return  http_response 
 
 
 @app.post("/note/{action}")
-def manage_folder(action, data: str):
+def manage_note(action, data: str):
     
     if action == 'create':
         http_response = {
@@ -118,7 +116,6 @@ def manage_folder(action, data: str):
         return  http_response 
 
     if action == 'update':
-        # Route to the note micro service
         http_response = {
             "endpoint": 'update note route',
         }
