@@ -32,21 +32,21 @@ def manage_group_member(data: dict):
         return 'Page is non existant'
     
 
-    if action == 'create':
+    if data['action'] == 'create':
         http_response = {
             "endpoint": 'create group member',
             "echo_data": data
         }
         return  http_response 
 
-    if action == 'update':
+    if data['action'] == 'update':
         http_response = {
             "endpoint": 'update group member',
             "echo_data": data
         }
         return  http_response 
 
-    if action == 'delete':
+    if data['action'] == 'delete':
         http_response = {
             "endpoint": 'delete group member',
             "echo_data": data
@@ -78,21 +78,21 @@ def manage_super_member(data: dict):
         return 'Page is non existant'
     
     
-    if action == 'create':
+    if data['action'] == 'create':
         http_response = {
             "endpoint": 'create super member ',
             "echo_data": data
         }
         return  http_response 
 
-    if action == 'update':
+    if data['action'] == 'update':
         http_response = {
             "endpoint": 'update super member ',
             "echo_data": data
         }
         return  http_response 
 
-    if action == 'delete':
+    if data['action'] == 'delete':
         http_response = {
             "endpoint": 'delete super member ',
             "echo_data": data
@@ -125,21 +125,21 @@ def manage_folder_member(data: dict):
         return 'Page is non existant'
     
     
-    if action == 'create':
+    if data['action'] == 'create':
         http_response = {
             "endpoint": 'create folder member',
             "echo_data": data
         }
         return  http_response 
 
-    if action == 'update':
+    if data['action'] == 'update':
         http_response = {
             "endpoint": 'update folder member',
             "echo_data": data
         }
         return  http_response 
 
-    if action == 'delete':
+    if data['action'] == 'delete':
         http_response = {
             "endpoint": 'delete folder member',
             "echo_data": data
@@ -172,21 +172,21 @@ def manage_note_member(data: dict):
         return 'Page is non existant'
     
     
-    if action == 'create':
+    if data['action'] == 'create':
         http_response = {
             "endpoint": 'create note member',
             "echo_data": data
         }
         return  http_response 
 
-    if action == 'update':
+    if data['action'] == 'update':
         http_response = {
             "endpoint": 'update note member',
             "echo_data": data
         }
         return  http_response 
 
-    if action == 'delete':
+    if data['action'] == 'delete':
         http_response = {
             "endpoint": 'delete note member',
             "echo_data": data

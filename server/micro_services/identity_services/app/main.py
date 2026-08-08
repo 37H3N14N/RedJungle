@@ -33,21 +33,21 @@ def manage_user(data: dict):
         return 'Page is non existant'
     
     
-    if action == 'create':
+    if data['action'] == 'create':
         http_response = {
             "endpoint": 'create user',
             "echo_data": data
         }
         return  http_response 
 
-    if action == 'update':
+    if data['action'] == 'update':
         http_response = {
             "endpoint": 'update user',
             "echo_data": data
         }
         return  http_response 
 
-    if action == 'delete':
+    if data['action'] == 'delete':
         http_response = {
             "endpoint": 'delete user',
             "echo_data": data
@@ -82,7 +82,7 @@ def manage_session(data: dict):
         return 'Page is non existant'
     
     
-    if action == 'create':
+    if data['action'] == 'create':
         http_response = {
             "endpoint": 'create session',
             "echo_data": data
@@ -90,7 +90,7 @@ def manage_session(data: dict):
         return  http_response 
 
 
-    if action == 'delete':
+    if data['action'] == 'delete':
         http_response = {
             "endpoint": 'delete session',
             "echo_data": data

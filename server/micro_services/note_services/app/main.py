@@ -7,6 +7,7 @@ import json
 app = FastAPI()
 #####################################################################
 
+# --------------------------------------------------------------------
 
 @app.get("/note-data/")
 def get_group_member(selection_type: str = 'all',session_id: str = ''):
@@ -22,6 +23,7 @@ def get_group_member(selection_type: str = 'all',session_id: str = ''):
     }
     return  http_response 
 
+# --------------------------------------------------------------------
 
 @app.post("/note-data/")
 def manage_group_member(data: dict):
@@ -32,70 +34,54 @@ def manage_group_member(data: dict):
         return 'Page is non existant'
 
     
-    if action == 'create':
+    if data['action'] == 'create':
         http_response = {
             "endpoint": 'create note',
             "data_pack": data
         }
         return  http_response 
 
-    if action == 'update':
+    if data['action'] == 'update':
         http_response = {
             "endpoint": 'update note',
             "data_pack": data
         }
         return  http_response 
 
-    if action == 'delete':
+    if data['action'] == 'delete':
         http_response = {
             "endpoint": 'delete note',
             "data_pack": data
         }
         return  http_response 
 
+# --------------------------------------------------------------------
 
+@app.post("/ssrf/")
+async def manage_ssrf(url: str):
 
+    async with httpx.AsyncClient() as client:
+        try:
+            url_response = await client.get(uri, params={'selection_type':selection_type,'session_id':session_id},timeout=4.0)
+            url_response.raise_for_status() 
 
+            data_collection = {
+                'url_data':url_response.json()
+            }
 
+            return data_collection
+            
+        except httpx.HTTPStatusError as exc:
+            raise HTTPException(
+                status_code=exc.response.status_code, 
+                detail=f"External API error: {exc.response.text}"
+            )
+        except httpx.RequestError:
+            raise HTTPException(
+                status_code=503, 
+                detail="External API is unavailable"
+            )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# --------------------------------------------------------------------
 
 

@@ -7,6 +7,8 @@ import json
 app = FastAPI()
 #####################################################################
 
+# --------------------------------------------------------------------
+
 @app.get("/group/", )
 def get_group(selection_type: str = 'all',session_id: str = ''):
 
@@ -23,6 +25,8 @@ def get_group(selection_type: str = 'all',session_id: str = ''):
     }
     return  http_response 
 
+
+# --------------------------------------------------------------------
 
 @app.post("/group/")
 def manage_group(data: dict):
@@ -55,6 +59,7 @@ def manage_group(data: dict):
         return  http_response 
 
 
+# --------------------------------------------------------------------
 
 @app.get("/folder/")
 def get_folder(selection_type: str = 'all',session_id: str = ''):
@@ -70,6 +75,7 @@ def get_folder(selection_type: str = 'all',session_id: str = ''):
     }
     return  http_response 
 
+# --------------------------------------------------------------------
 
 @app.post("/folder/")
 def manage_folder(data: str):
@@ -80,21 +86,21 @@ def manage_folder(data: str):
         return 'Page is non existant'
 
     
-    if action == 'create':
+    if data['action'] == 'create':
         http_response = {
             "endpoint": 'create folder',
             'data' : data
         }
         return  http_response 
 
-    if action == 'update':
+    if data['action'] == 'update':
         http_response = {
             "endpoint": 'update folder',
             'data' : data
         }
         return  http_response 
 
-    if action == 'delete':
+    if data['action'] == 'delete':
         http_response = {
             "endpoint": 'delete folder',
             'data' : data
@@ -102,6 +108,7 @@ def manage_folder(data: str):
         return  http_response 
 
 
+# --------------------------------------------------------------------
 
 @app.get("/note/")
 def get_note(selection_type: str = 'all',session_id: str = ''):
@@ -118,6 +125,8 @@ def get_note(selection_type: str = 'all',session_id: str = ''):
     return  http_response 
 
 
+# --------------------------------------------------------------------
+
 @app.post("/note/")
 def manage_note(data: str):
 
@@ -127,21 +136,21 @@ def manage_note(data: str):
         return 'Page is non existant'
     
 
-    if action == 'create':
+    if data['action'] == 'create':
         http_response = {
             "endpoint": 'create note',
             'data' : data
         }
         return  http_response 
 
-    if action == 'update':
+    if data['action'] == 'update':
         http_response = {
             "endpoint": 'update note route',
             'data' : data
         }
         return  http_response 
 
-    if action == 'delete':
+    if data['action'] == 'delete':
         http_response = {
             "endpoint": 'delete note',
             'data' : data
@@ -149,6 +158,7 @@ def manage_note(data: str):
         return  http_response 
 
 
+# --------------------------------------------------------------------
 
 
 
