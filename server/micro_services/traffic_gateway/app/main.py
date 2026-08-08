@@ -24,34 +24,6 @@ note_data_endpoint = "http://192.168.1.103:9015/note-data/"
 
 #####################################################################
 
-
-@app.get("/ssrf/")
-async def get_ssrf(url: str = 'super',selection_type: str = '',session_id: str = ''):
-
-    async with httpx.AsyncClient() as client:
-        try:
-            url_response = await client.get(f'http://192.168.1.103:9014/member/{url}', params={'selection_type':selection_type,'session_id':session_id},timeout=4.0)
-            url_response.raise_for_status() 
-
-            data_collection = {
-                'url_response':url_response.json()
-            }
-
-            return data_collection
-            
-        except httpx.HTTPStatusError as exc:
-            raise HTTPException(
-                status_code=exc.response.status_code, 
-                detail=f"External API error: {exc.response.text}"
-            )
-        except httpx.RequestError:
-            raise HTTPException(
-                status_code=503, 
-                detail="External API is unavailable"
-            )
-
-
-
 # --------------------------------------------------------------------
 
 @app.get("/group/")
