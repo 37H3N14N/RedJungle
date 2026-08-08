@@ -23,8 +23,14 @@ def get_group_member(selection_type: str = 'all',session_id: str = ''):
     return  http_response 
 
 
-@app.post("/note-data/{action}")
-def manage_group_member(action, data: dict):
+@app.post("/note-data/")
+def manage_group_member(data: dict):
+
+    allowed_actions = ['create','update','delete']
+
+    if data['action'] not in allowed_actions:
+        return 'Page is non existant'
+
     
     if action == 'create':
         http_response = {

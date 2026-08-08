@@ -24,8 +24,14 @@ def get_user(selection_type: str = 'all',session_id: str = ''):
 
 
 
-@app.post("/user/{action}")
-def manage_user(action, data: dict):
+@app.post("/user/")
+def manage_user(data: dict):
+
+    allowed_actions = ['create','update','delete']
+
+    if data['action'] not in allowed_actions:
+        return 'Page is non existant'
+    
     
     if action == 'create':
         http_response = {
@@ -67,8 +73,14 @@ def get_session(selection_type: str = 'all',session_id: str = ''):
 
 
 
-@app.post("/session/{action}")
-def manage_session(action, data: dict):
+@app.post("/session/")
+def manage_session(data: dict):
+    
+    allowed_actions = ['create','update','delete']
+
+    if data['action'] not in allowed_actions:
+        return 'Page is non existant'
+    
     
     if action == 'create':
         http_response = {

@@ -24,32 +24,36 @@ def get_group(selection_type: str = 'all',session_id: str = ''):
     return  http_response 
 
 
-@app.post("/group/{action}")
-def manage_group(action, data: dict):
+@app.post("/group/")
+def manage_group(data: dict):
+
+    allowed_actions = ['create','update','delete']
+
+    if data['action'] not in allowed_actions:
+        return 'Page is non existant'
+
     
-    if action == 'create':
+    if data['action'] == 'create':
         http_response = {
             "endpoint": 'create group',
             'data' : data
         }
         return  http_response 
 
-    if action == 'update':
+    if data['action'] == 'update':
         http_response = {
             "endpoint": 'update group',
             'data' : data
         }
         return  http_response 
 
-    if action == 'delete':
+    if data['action'] == 'delete':
         http_response = {
             "endpoint": 'delete group',
             'data' : data
         }
         return  http_response 
 
-    if action != 'create' or 'update' or 'delete':
-        return 'Page is non existant'
 
 
 @app.get("/folder/")
@@ -67,24 +71,33 @@ def get_folder(selection_type: str = 'all',session_id: str = ''):
     return  http_response 
 
 
-@app.post("/folder/{action}")
-def manage_folder(action, data: str):
+@app.post("/folder/")
+def manage_folder(data: str):
+
+    allowed_actions = ['create','update','delete']
+
+    if data['action'] not in allowed_actions:
+        return 'Page is non existant'
+
     
     if action == 'create':
         http_response = {
             "endpoint": 'create folder',
+            'data' : data
         }
         return  http_response 
 
     if action == 'update':
         http_response = {
             "endpoint": 'update folder',
+            'data' : data
         }
         return  http_response 
 
     if action == 'delete':
         http_response = {
             "endpoint": 'delete folder',
+            'data' : data
         }
         return  http_response 
 
@@ -105,24 +118,33 @@ def get_note(selection_type: str = 'all',session_id: str = ''):
     return  http_response 
 
 
-@app.post("/note/{action}")
-def manage_note(action, data: str):
+@app.post("/note/")
+def manage_note(data: str):
+
+    allowed_actions = ['create','update','delete']
+
+    if data['action'] not in allowed_actions:
+        return 'Page is non existant'
     
+
     if action == 'create':
         http_response = {
             "endpoint": 'create note',
+            'data' : data
         }
         return  http_response 
 
     if action == 'update':
         http_response = {
             "endpoint": 'update note route',
+            'data' : data
         }
         return  http_response 
 
     if action == 'delete':
         http_response = {
             "endpoint": 'delete note',
+            'data' : data
         }
         return  http_response 
 

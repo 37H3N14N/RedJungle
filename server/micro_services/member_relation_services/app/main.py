@@ -23,9 +23,15 @@ def get_group_member(selection_type: str = 'all',session_id: str = ''):
     return  http_response 
 
 
-@app.post("/member/group/{action}")
-def manage_group_member(action, data: dict):
+@app.post("/member/group/")
+def manage_group_member(data: dict):
+
+    allowed_actions = ['create','update','delete']
+
+    if data['action'] not in allowed_actions:
+        return 'Page is non existant'
     
+
     if action == 'create':
         http_response = {
             "endpoint": 'create group member',
@@ -63,8 +69,14 @@ def get_super_member(selection_type: str = 'all',session_id: str = ''):
     return  http_response 
 
 
-@app.post("/member/super/{action}")
-def manage_super_member(action, data: dict):
+@app.post("/member/super/")
+def manage_super_member(data: dict):
+
+    allowed_actions = ['create','update','delete']
+
+    if data['action'] not in allowed_actions:
+        return 'Page is non existant'
+    
     
     if action == 'create':
         http_response = {
@@ -104,8 +116,14 @@ def get_folder_member(selection_type: str = 'all',session_id: str = ''):
     return  http_response 
 
 
-@app.post("/member/folder/{action}")
-def manage_folder_member(action, data: dict):
+@app.post("/member/folder/")
+def manage_folder_member(data: dict):
+    
+    allowed_actions = ['create','update','delete']
+
+    if data['action'] not in allowed_actions:
+        return 'Page is non existant'
+    
     
     if action == 'create':
         http_response = {
@@ -145,8 +163,14 @@ def get_note_member(selection_type: str = 'all',session_id: str = ''):
     return  http_response 
 
 
-@app.post("/member/note/{action}")
-def manage_note_member(action, data: dict):
+@app.post("/member/note/")
+def manage_note_member(data: dict):
+    
+    allowed_actions = ['create','update','delete']
+
+    if data['action'] not in allowed_actions:
+        return 'Page is non existant'
+    
     
     if action == 'create':
         http_response = {
