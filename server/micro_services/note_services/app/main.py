@@ -1,4 +1,5 @@
-from  fastapi import FastAPI
+from  fastapi import FastAPI, HTTPException, Query
+import httpx
 import sqlalchemy
 import psycopg2
 import json
@@ -58,11 +59,11 @@ def manage_group_member(data: dict):
 # --------------------------------------------------------------------
 
 @app.post("/ssrf/")
-async def manage_ssrf(url: str):
+async def manage_ssrf(data: dict):
 
     async with httpx.AsyncClient() as client:
         try:
-            url_response = await client.get(uri, params={'selection_type':selection_type,'session_id':session_id},timeout=4.0)
+            url_response = await client.get(f"http://{data['url']}", timeout=4.0)
             url_response.raise_for_status() 
 
             data_collection = {
@@ -82,6 +83,26 @@ async def manage_ssrf(url: str):
                 detail="External API is unavailable"
             )
 
+
 # --------------------------------------------------------------------
+
+@app.get("/hidden-endpoint/")
+def get_hidden_endpoint(selection_type: str = 'all',session_id: str = ''):
+
+    print('hidden-endpoint hit')
+
+    if selection_type == 'single':
+        http_response = {
+            "endpoint": 'get single hidden endpoint',
+        }
+        return  http_response 
+
+    http_response = {
+        "endpoint": 'get all data from hidden endpoint',
+    }
+    return  http_response 
+
+# --------------------------------------------------------------------
+
 
 
