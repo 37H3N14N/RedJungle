@@ -10,6 +10,6 @@ COPY ./app /app
 
 EXPOSE 9014
 
-CMD ["uvicorn", "main_room:app", "--host", "0.0.0.0", "--port", "9014"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "9014"]
 
 
