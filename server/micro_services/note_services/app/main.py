@@ -58,47 +58,11 @@ def manage_group_member(data: dict):
 
 # --------------------------------------------------------------------
 
-@app.post("/ssrf/")
-async def manage_ssrf(data: dict):
-
-    async with httpx.AsyncClient() as client:
-        try:
-            url_response = await client.get(f"http://{data['url']}", timeout=4.0)
-            url_response.raise_for_status() 
-
-            data_collection = {
-                'url_data':url_response.json()
-            }
-
-            return data_collection
-            
-        except httpx.HTTPStatusError as exc:
-            raise HTTPException(
-                status_code=exc.response.status_code, 
-                detail=f"External API error: {exc.response.text}"
-            )
-        except httpx.RequestError:
-            raise HTTPException(
-                status_code=503, 
-                detail="External API is unavailable"
-            )
-
-
-# --------------------------------------------------------------------
-
-@app.get("/hidden-endpoint/")
-def get_hidden_endpoint(selection_type: str = 'all',session_id: str = ''):
-
-    print('hidden-endpoint hit')
-
-    if selection_type == 'single':
-        http_response = {
-            "endpoint": 'get single hidden endpoint',
-        }
-        return  http_response 
+@app.get("/hidden/")
+def get_hidden_endpoint():
 
     http_response = {
-        "endpoint": 'get all data from hidden endpoint',
+        "endpoint": 'get all data from hidden endpoint'
     }
     return  http_response 
 

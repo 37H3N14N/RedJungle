@@ -8,8 +8,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./app /app
 
-EXPOSE 7005
+EXPOSE 9015
 
-CMD ["uvicorn", "main_review:app", "--host", "0.0.0.0", "--port", "7005"]
+CMD ["uvicorn", "main_review:app", "--host", "0.0.0.0", "--port", "9015"]
 
 

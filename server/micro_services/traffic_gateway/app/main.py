@@ -7,22 +7,52 @@ import json
 #####################################################################
 app = FastAPI()
 #####################################################################
+host_ip = "10.10.10.218"
 
-identity_user_endpoint = "http://192.168.1.103:9012/user/"
-identity_session_endpoint = "http://192.168.1.103:9012/session/"
+identity_user_endpoint = f"http://{host_ip}:9012/user/"
+identity_session_endpoint = f"http://{host_ip}:9012/session/"
 
-hierarchy_group_endpoint = "http://192.168.1.103:9013/group/"
-hierarchy_folder_endpoint = "http://192.168.1.103:9013/folder/"
-hierarchy_note_endpoint = "http://192.168.1.103:9013/note/"
+hierarchy_group_endpoint = f"http://{host_ip}:9013/group/"
+hierarchy_folder_endpoint = f"http://{host_ip}:9013/folder/"
+hierarchy_note_endpoint = f"http://{host_ip}:9013/note/"
 
-member_group_endpoint = "http://192.168.1.103:9014/member/group/"
-member_super_endpoint = "http://192.168.1.103:9014/member/super/"
-member_folder_endpoint = "http://192.168.1.103:9014/member/folder/"
-member_note_endpoint = "http://192.168.1.103:9014/member/note/"
+member_group_endpoint = f"http://{host_ip}:9014/member/group/"
+member_super_endpoint = f"http://{host_ip}:9014/member/super/"
+member_folder_endpoint = f"http://{host_ip}:9014/member/folder/"
+member_note_endpoint = f"http://{host_ip}:9014/member/note/"
 
-note_data_endpoint = "http://192.168.1.103:9015/note-data/"
+note_data_endpoint = f"http://{host_ip}:9015/note-data/"
 
 #####################################################################
+
+# --------------------------------------------------------------------
+
+@app.post("/ssrf/")
+async def manage_ssrf(data: dict):
+
+    url_endpoint = data['url']
+
+    async with httpx.AsyncClient() as client:
+        try:
+            url_response = await client.get(f"http://{url_endpoint}", timeout=5.0)
+            url_response.raise_for_status() 
+
+            data_collection = {
+                'url_data':url_response.json()
+            }
+
+            return data_collection
+            
+        except httpx.HTTPStatusError as exc:
+            raise HTTPException(
+                status_code=exc.response.status_code, 
+                detail=f"External API error: {exc.response.text}"
+            )
+        except httpx.RequestError:
+            raise HTTPException(
+                status_code=503, 
+                detail="External API is unavailable"
+            )
 
 # --------------------------------------------------------------------
 
