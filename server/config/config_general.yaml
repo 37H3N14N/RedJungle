@@ -1,0 +1,85 @@
+# API ROUTING OVERVIEW 
+frontend/curl -> nginx -> internal_microservices :
+
+# CHOSEN BASE URL
+-> api_network_base_url: http://redjungle.area51
+
+# CHOSEN BASE URL
+-> identity_microservice: 9011 / DB{7011} = [v1]
+-> hierarchy_microservice: 9012 / DB{7012} = [v2]
+-> member_microservice: 9013 / DB{7013} = [v3]
+-> note_microservice: 9014 / DB{7014} = [v4]
+
+-> [v1 {/identity} ] = identity:
+{ get/post } = [ /user, /session ]
+
+-> [v2 {/hierarchy} ] = hierarchy:
+{ get/post } = [ /group, /folder, /note ]
+
+-> [v3 {/member} ] = member:
+{ get/post } = [ /group, /folder, /note ]
+
+-> [v4 {/note} ] = note:
+{ get/post } = [ /note-data ]
+
+# DB SCHEMATICS
+# -> hierarchy 
+db_note_architecture = {
+        'note_id':"",
+        'folder_id':"",
+        'note_name':"",
+        'note_data_id':"",
+        'note_visibility':""
+}
+db_folder_architecture = {
+        'folder_id':"",
+        'group_id':"",
+        'folder_name':"",
+        'visibility':""
+}
+db_group_architecture = {
+        'group_id':"",
+        'group_name':"",
+        'visibility':""
+}
+# -> member 
+db_group_auth_architecture = {
+        'group_id':"",
+        'group_owner':"",
+        'members':""
+}
+db_folder_auth_architecture = {
+        'folder_id':"",
+        'group_id':"",
+        'admin_id':""
+        'members':""
+}
+db_note_auth_architecture = {
+        'note_id':"",
+        'folder_id':"",
+        'group_id':"",
+        'note_owner':"",
+        'collaborators':""
+}
+# -> note 
+db_note = {
+        'note_data_id':"",
+        'folder_id':"",
+        'group_id':"",
+        'contents':""
+}
+# -> identity
+db_users = {
+        'user_id':"",
+        'email':"",
+        'passcode':"",
+}
+db_session_ids = {
+        'session_id':"",
+        'user_id':"",
+        'status':"active/expired"
+}
+
+
+
+

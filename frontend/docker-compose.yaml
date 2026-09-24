@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  redjungle_frontend:
+    build: .
+    ports:
+      - "4080:4080"
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+
+
+
+

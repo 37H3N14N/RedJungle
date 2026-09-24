@@ -1,0 +1,20 @@
+services:
+  redjungle_bank:
+    image: postgres:17
+    container_name: identity_db
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - pgdata_volume:/var/lib/posgresql/data
+      - ./config:/etc/postgresql/
+    ports:
+      - '7011:5432'
+volumes:
+  pgdata_volume:
+  
+
+
+
+
+
