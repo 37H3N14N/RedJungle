@@ -62,14 +62,13 @@ def group_auth_create(data):
         }
         return response_data
 
-    if group_existance['status'] == 'failed':
 
-        group_auth_db[group_id] = {'members': members}
-        response_data = {
-            'status': 'successful',
-            'message': 'Group ACL created'
-        }
-        return response_data
+    group_auth_db[group_id] = {'members': members}
+    response_data = {
+        'status': 'successful',
+        'message': 'Group ACL created'
+    }
+    return response_data
 
 ###################################################
 
@@ -390,7 +389,6 @@ def note_auth_create(data):
     note_id = data['payload']['note_id']
     group_id = data['payload']['group_id']
     folder_id = data['payload']['folder_id']
-    content_id = data['payload']['content_id']
     collaborators = data['payload']['collaborators']
 
     note_existance = note_auth_read({'payload': {
@@ -410,7 +408,6 @@ def note_auth_create(data):
         auth_note_db[note_id] = {
             'group_id': group_id,
             'folder_id': folder_id,
-            'content_id': content_id,
             'collaborators': collaborators
             }
 

@@ -25,23 +25,26 @@ frontend/curl -> nginx -> internal_microservices :
 -> [v4 {/content} ] = content:
 { get/post } = [ /content ]
 
-# DB SCHEMATICS
+# DB SCHEMATICS [service -> service {ACL} ] => For cascading CRUD funtions... Later
 # -> hierarchy 
-db_note_architecture = {
-        'note_id':"",
-        'note_name':"",
-        'note_owner':"",
-        'note_visibility':""
-}
-db_folder_architecture = {
-        'folder_id':"",
-        'folder_name':"",
-        'visibility':""
-}
 db_group_architecture = {
         'group_id':"",
         'group_name':"",
         'group_owner':"",
+        'visibility':""
+}
+db_folder_architecture = {
+        'folder_id':"",
+        'group_id':"",
+        'folder_name':"",
+        'visibility':""
+}
+db_note_architecture = {
+        'note_id':"",
+        'folder_id':"",
+        'note_name':"",
+        'note_owner':"",
+        'content_id':"",
         'visibility':""
 }
 # -> auth 
@@ -59,15 +62,14 @@ db_note_auth_architecture = {
         'note_id':"",
         'group_id':"",
         'folder_id':"",
-        'content_id':"",
         'collaborators':""
 }
 # -> content 
 db_content = {
         'content_id':"",
+        'note_id':"",
         'group_id':"",
         'folder_id':"",
-        'note_id':"",
         'contents':""
 }
 # -> identity
