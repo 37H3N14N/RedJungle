@@ -7,45 +7,46 @@ frontend/curl -> nginx -> internal_microservices :
 # CHOSEN BASE URL
 -> identity_microservice: 9011 / DB{7011} = [v1]
 -> hierarchy_microservice: 9012 / DB{7012} = [v2]
--> member_microservice: 9013 / DB{7013} = [v3]
+-> auth_microservice: 9013 / DB{7013} = [v3]
 -> note_microservice: 9014 / DB{7014} = [v4]
 
+# each call to the server goes through identity to confirm user_id & session_id match
+
+# URI PATHS
 -> [v1 {/identity} ] = identity:
 { get/post } = [ /user, /session ]
 
 -> [v2 {/hierarchy} ] = hierarchy:
 { get/post } = [ /group, /folder, /note ]
 
--> [v3 {/member} ] = member:
+-> [v3 {/auth} ] = auth:
 { get/post } = [ /group, /folder, /note ]
 
--> [v4 {/note} ] = note:
-{ get/post } = [ /note-data ]
+-> [v4 {/content} ] = content:
+{ get/post } = [ /content ]
 
 # DB SCHEMATICS
 # -> hierarchy 
 db_note_architecture = {
         'note_id':"",
-        'folder_id':"",
         'note_name':"",
-        'note_data_id':"",
+        'note_owner':"",
         'note_visibility':""
 }
 db_folder_architecture = {
         'folder_id':"",
-        'group_id':"",
         'folder_name':"",
         'visibility':""
 }
 db_group_architecture = {
         'group_id':"",
         'group_name':"",
+        'group_owner':"",
         'visibility':""
 }
-# -> member 
+# -> auth 
 db_group_auth_architecture = {
         'group_id':"",
-        'group_owner':"",
         'members':""
 }
 db_folder_auth_architecture = {
@@ -56,23 +57,24 @@ db_folder_auth_architecture = {
 }
 db_note_auth_architecture = {
         'note_id':"",
-        'folder_id':"",
         'group_id':"",
-        'note_owner':"",
+        'folder_id':"",
+        'content_id':"",
         'collaborators':""
 }
-# -> note 
-db_note = {
-        'note_data_id':"",
-        'folder_id':"",
+# -> content 
+db_content = {
+        'content_id':"",
         'group_id':"",
+        'folder_id':"",
+        'note_id':"",
         'contents':""
 }
 # -> identity
 db_users = {
-        'user_id':"",
         'email':"",
-        'passcode':"",
+        'user_id':"",
+        'hashcode':"",
 }
 db_session_ids = {
         'session_id':"",

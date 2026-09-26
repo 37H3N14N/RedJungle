@@ -10,23 +10,23 @@ app = FastAPI()
 
 # --------------------------------------------------------------------
 
-@app.get("/note-data/")
+@app.get("/content/")
 def get_group_member(selection_type: str = 'all',session_id: str = ''):
 
     if selection_type == 'single':
         http_response = {
-            "endpoint": 'get single note-data',
+            "endpoint": 'get single content',
         }
         return  http_response 
 
     http_response = {
-        "endpoint": 'get all note-datas',
+        "endpoint": 'get all contents',
     }
     return  http_response 
 
 # --------------------------------------------------------------------
 
-@app.post("/note-data/")
+@app.post("/content/")
 def manage_group_member(data: dict):
 
     allowed_actions = ['create','update','delete']

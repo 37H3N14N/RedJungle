@@ -8,23 +8,23 @@ app = FastAPI()
 #####################################################################
 
 
-@app.get("/member/group/")
-def get_group_member(selection_type: str = 'all',session_id: str = ''):
+@app.get("/auth/group/")
+def get_group_auth(selection_type: str = 'all',session_id: str = ''):
 
     if selection_type == 'single':
         http_response = {
-            "endpoint": 'get single group member',
+            "endpoint": 'get single group auth',
         }
         return  http_response 
 
     http_response = {
-        "endpoint": 'get all group members',
+        "endpoint": 'get all group auths',
     }
     return  http_response 
 
 
-@app.post("/member/group/")
-def manage_group_member(data: dict):
+@app.post("/auth/group/")
+def manage_group_auth(data: dict):
 
     allowed_actions = ['create','update','delete']
 
@@ -34,90 +34,43 @@ def manage_group_member(data: dict):
 
     if data['action'] == 'create':
         http_response = {
-            "endpoint": 'create group member',
+            "endpoint": 'create group auth',
             "echo_data": data
         }
         return  http_response 
 
     if data['action'] == 'update':
         http_response = {
-            "endpoint": 'update group member',
+            "endpoint": 'update group auth',
             "echo_data": data
         }
         return  http_response 
 
     if data['action'] == 'delete':
         http_response = {
-            "endpoint": 'delete group member',
+            "endpoint": 'delete group auth',
             "echo_data": data
         }
         return  http_response 
 
 
-@app.get("/member/super/")
-def get_super_member(selection_type: str = 'all',session_id: str = ''):
+@app.get("/auth/folder/")
+def get_folder_auth(selection_type: str = 'all',session_id: str = ''):
 
     if selection_type == 'single':
         http_response = {
-            "endpoint": 'get single super members',
+            "endpoint": 'get single folder auths',
         }
         return  http_response 
 
     http_response = {
-        "endpoint": 'get all super members',
+        "endpoint": 'get all folders auths',
     }
     return  http_response 
 
 
-@app.post("/member/super/")
-def manage_super_member(data: dict):
-
-    allowed_actions = ['create','update','delete']
-
-    if data['action'] not in allowed_actions:
-        return 'Page is non existant'
-    
-    
-    if data['action'] == 'create':
-        http_response = {
-            "endpoint": 'create super member ',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if data['action'] == 'update':
-        http_response = {
-            "endpoint": 'update super member ',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if data['action'] == 'delete':
-        http_response = {
-            "endpoint": 'delete super member ',
-            "echo_data": data
-        }
-        return  http_response 
-
-
-
-@app.get("/member/folder/")
-def get_folder_member(selection_type: str = 'all',session_id: str = ''):
-
-    if selection_type == 'single':
-        http_response = {
-            "endpoint": 'get single folder members',
-        }
-        return  http_response 
-
-    http_response = {
-        "endpoint": 'get all folders members',
-    }
-    return  http_response 
-
-
-@app.post("/member/folder/")
-def manage_folder_member(data: dict):
+@app.post("/auth/folder/")
+def manage_folder_auth(data: dict):
     
     allowed_actions = ['create','update','delete']
 
@@ -127,44 +80,44 @@ def manage_folder_member(data: dict):
     
     if data['action'] == 'create':
         http_response = {
-            "endpoint": 'create folder member',
+            "endpoint": 'create folder auth',
             "echo_data": data
         }
         return  http_response 
 
     if data['action'] == 'update':
         http_response = {
-            "endpoint": 'update folder member',
+            "endpoint": 'update folder auth',
             "echo_data": data
         }
         return  http_response 
 
     if data['action'] == 'delete':
         http_response = {
-            "endpoint": 'delete folder member',
+            "endpoint": 'delete folder auth',
             "echo_data": data
         }
         return  http_response 
 
 
 
-@app.get("/member/note/")
-def get_note_member(selection_type: str = 'all',session_id: str = ''):
+@app.get("/auth/note/")
+def get_note_auth(selection_type: str = 'all',session_id: str = ''):
 
     if selection_type == 'single':
         http_response = {
-            "endpoint": 'get single note member',
+            "endpoint": 'get single note auth',
         }
         return  http_response 
 
     http_response = {
-        "endpoint": 'get all note members',
+        "endpoint": 'get all note auths',
     }
     return  http_response 
 
 
-@app.post("/member/note/")
-def manage_note_member(data: dict):
+@app.post("/auth/note/")
+def manage_note_auth(data: dict):
     
     allowed_actions = ['create','update','delete']
 
@@ -174,21 +127,21 @@ def manage_note_member(data: dict):
     
     if data['action'] == 'create':
         http_response = {
-            "endpoint": 'create note member',
+            "endpoint": 'create note auth',
             "echo_data": data
         }
         return  http_response 
 
     if data['action'] == 'update':
         http_response = {
-            "endpoint": 'update note member',
+            "endpoint": 'update note auth',
             "echo_data": data
         }
         return  http_response 
 
     if data['action'] == 'delete':
         http_response = {
-            "endpoint": 'delete note member',
+            "endpoint": 'delete note auth',
             "echo_data": data
         }
         return  http_response 

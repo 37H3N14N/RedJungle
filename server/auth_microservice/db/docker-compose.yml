@@ -1,7 +1,7 @@
 services:
   redjungle_bank:
     image: postgres:17
-    container_name: member_db
+    container_name: auth_db
     restart: always
     env_file:
       - .env
