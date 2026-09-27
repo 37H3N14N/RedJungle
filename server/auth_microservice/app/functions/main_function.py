@@ -318,6 +318,8 @@ def folder_auth_update(data):
 def folder_auth_delete(data):
     # folder id existance
     # member / identity
+    folder_id = data['payload']['folder_id']
+
     folder_existance = folder_auth_read({'payload': {
         'field_type':'existance',
         'folder_id': folder_id
@@ -504,6 +506,8 @@ def note_auth_update(data):
 def note_auth_delete(data):
     # note id existance
     # member / identity
+    note_id = data['payload']['note_id']
+
     note_existance = note_auth_read({'payload': {
         'field_type':'existance',
         'note_id': note_id

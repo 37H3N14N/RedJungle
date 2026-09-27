@@ -8,7 +8,7 @@ frontend/curl -> nginx -> internal_microservices :
 -> identity_microservice: 9011 / DB{7011} = [v1]
 -> hierarchy_microservice: 9012 / DB{7012} = [v2]
 -> auth_microservice: 9013 / DB{7013} = [v3]
--> note_microservice: 9014 / DB{7014} = [v4]
+-> content_microservice: 9014 / DB{7014} = [v4]
 
 # each call to the server goes through identity to confirm user_id & session_id match
 

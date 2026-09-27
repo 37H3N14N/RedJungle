@@ -79,7 +79,7 @@ def user_create(data):
         hashcode = data['payload']['hashcode']
 
         user_existance = user_read({'payload':{
-                'field_type': 'detail',
+                'field_type': 'details',
                 'action_type': 'email',
                 'email': email
         }})
