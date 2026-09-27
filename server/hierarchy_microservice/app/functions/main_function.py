@@ -17,22 +17,21 @@ def group_read(data):
         field_type = data['payload']['field_type']
 
         if field_type == 'existance':
+
                 group_id = data['payload']['group_id']
 
-                try:
-                        if group_db[group_id]:
-                            response_data = {
-                                'status': 'successful',
-                                'message': 'group exists',
-                            }
-                            return response_data
+                if group_db[group_id]:
+                    response_data = {
+                        'status': 'successful',
+                        'message': 'group exists',
+                    }
+                    return response_data
 
-                except:
-                        response_data = {
-                            'status':'failed',
-                            'message': 'Group with that id does not exist'
-                        }
-                        return response_data
+                response_data = {
+                    'status':'failed',
+                    'message': 'Group with that id does not exist'
+                }
+                return response_data
 
 
         if field_type == 'details':
@@ -115,7 +114,7 @@ def group_create(data):
         group_owner_existance = group_read({'payload':{
                 'field_type':'details',
                 'action_type':'owner',
-                'group_owner':group_owner
+                'user_id':group_owner
                 }})
 
         if group_owner_existance['status'] == 'successful':
@@ -256,7 +255,7 @@ def group_delete(data):
 
         if group_existance['status'] == 'successful':
                 if group_existance['group_owner'] == user_id:
-                        group_db[group_id] = None
+                        del group_db[group_id] 
 
                         response_data = {
                                 'status': 'successful',
@@ -305,13 +304,21 @@ def folder_read(data):
 
                 if action_type == 'folder_id':
                         folder_id = data['payload']['folder_id']
-                        if folder_db[folder_db]:
+                        try:
+                                if folder_db[folder_db]:
 
+                                        response_data = {
+                                            'folder_id': folder_id,
+                                            'folder_name': folder_db[folder_id]['folder_name'],
+                                            'group_id': folder_db[folder_id]['group_id'],
+                                            'visibility': folder_db[folder_id]['visibility']
+                                        }
+                                        return response_data
+
+                        except:
                                 response_data = {
-                                    'folder_id': folder_id,
-                                    'folder_name': folder_db[folder_id]['folder_name'],
-                                    'group_id': folder_db[folder_id]['group_id'],
-                                    'visibility': folder_db[folder_id]['visibility']
+                                    'status':'failed',
+                                    'message': 'Folder with that id does not exist'
                                 }
                                 return response_data
 
@@ -388,7 +395,7 @@ def folder_create(data):
                                 }
                                 return response_data
 
-                new_folder_id = 'random string'
+                new_folder_id = str(uuid.uuid4())
                 folder_db[new_folder_id] = {
                         'folder_name': folder_name,
                         'group_id': group_id,
@@ -401,7 +408,7 @@ def folder_create(data):
                 }
                 return response_data
 
-        new_folder_id = 'random string'
+        new_folder_id = str(uuid.uuid4())
         folder_db[new_folder_id] = {
                 'folder_name':folder_name,
                 'group_id': group_id,
@@ -533,11 +540,11 @@ def folder_delete(data):
 
         if folder_existance['status'] == 'successful':
                 if folder_parent_details['group_owner'] == user_id:
-                        group_db[group_id] = None
+                        del folder_db[folder_id] 
 
                         response_data = {
                                 'status': 'successful',
-                                'message': 'Group is deleted'
+                                'message': 'Folder is deleted'
                         }
                         return response_data
 
@@ -549,7 +556,7 @@ def folder_delete(data):
 
         response_data = {
                 'status': 'failed',
-                'message': 'Group does not exist'
+                'message': 'folder does not exist'
         }
         return response_data
 
@@ -582,19 +589,26 @@ def note_read(data):
         if field_type == 'details':
 
                 if action_type == 'note_id':
-                        note_id = data['payload']['note_id']
-                        if note_db[note_id]:
+                        try:
+                                note_id = data['payload']['note_id']
+                                if note_db[note_id]:
 
+                                        response_data = {
+                                            'note_id': note_id,
+                                            'note_name': note_db[note_id]['note_name'],
+                                            'note_owner': note_db[note_id]['note_owner'],
+                                            'folder_id': note_db[note_id]['folder_id'],
+                                            'content_id': note_db[note_id]['content_id'],
+                                            'visibility': note_db[note_id]['visibility']
+                                        }
+                                        return response_data
+                        
+                        except:
                                 response_data = {
-                                    'note_id': note_id,
-                                    'note_name': note_db[note_id]['note_name'],
-                                    'note_owner': note_db[note_id]['note_owner'],
-                                    'folder_id': note_db[note_id]['folder_id'],
-                                    'content_id': note_db[note_id]['content_id'],
-                                    'visibility': note_db[note_id]['visibility']
+                                    'status':'failed',
+                                    'message': 'Note with that id does not exist'
                                 }
                                 return response_data
-
 
                 if action_type == 'name':
                         note_name = data['payload']['note_name']
@@ -688,7 +702,7 @@ def note_create(data):
                                 }
                                 return response_data
 
-                new_note_id = 'random string'
+                new_note_id = str(uuid.uuid4())
                 note_db[new_note_id] = {
                         'note_name':note_name,
                         'note_owner': note_owner,
@@ -703,7 +717,7 @@ def note_create(data):
                 }
                 return response_data
 
-        new_note_id = 'random string'
+        new_note_id = str(uuid.uuid4())
         note_db[new_note_id] = {
                 'note_name':note_name,
                 'note_owner': note_owner,
@@ -838,7 +852,7 @@ def note_delete(data):
                 }})
 
                 if note_existance['note_owner'] == user_id or folder_parent_details['group_owner'] == user_id:
-                        note_db[note_id] = None
+                        del note_db[note_id] 
 
                         response_data = {
                                 'status': 'successful',
