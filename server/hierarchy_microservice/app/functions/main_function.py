@@ -1,7 +1,12 @@
 ######################################################
+import uuid
+
+######################################################
+
 group_db = {} # key=group_id
 folder_db = {} # key=folder_id
 note_db = {}
+
 ###################################################
 
 def group_read(data):
@@ -11,39 +16,50 @@ def group_read(data):
         action_type = data['payload']['action_type']
         field_type = data['payload']['field_type']
 
-        if field_type = 'existance':
+        if field_type == 'existance':
                 group_id = data['payload']['group_id']
 
-                if group_db[group_id]:
-                    response_data = {
-                        'status': 'successful',
-                        'message': 'group exists',
-                    }
-                    return response_data
-
-                response_data = {
-                    'status':'failed',
-                    'message': 'Group with that id does not exist'
-                }
-                return response_data
-
-
-        if field_type = 'details':
-
-                if action_type == 'group_id'
-                        group_id = data['payload']['group_id']
+                try:
                         if group_db[group_id]:
+                            response_data = {
+                                'status': 'successful',
+                                'message': 'group exists',
+                            }
+                            return response_data
 
+                except:
+                        response_data = {
+                            'status':'failed',
+                            'message': 'Group with that id does not exist'
+                        }
+                        return response_data
+
+
+        if field_type == 'details':
+
+                if action_type == 'group_id':
+                        try:
+                                group_id = data['payload']['group_id']
+                                if group_db[group_id]:
+
+                                        response_data = {
+                                                'status':'successful',
+                                                'group_id': group_id,
+                                                'group_name': group_db[group_id]['group_name'],
+                                                'group_owner': group_db[group_id]['group_owner'],
+                                                'visibility': group_db[group_id]['visibility'],
+                                        }
+                                        return response_data
+                        except:
                                 response_data = {
-                                    'group_id': group_id,
-                                    'group_name': group_db[group_id]['group_name'],
-                                    'group_owner': group_db[group_id]['group_owner'],
-                                    'visibility': group_db[group_id]['visibility'],
+                                    'status':'failed',
+                                    'message': 'Group with that id does not exist'
                                 }
                                 return response_data
 
 
-                if action_type == 'name'
+
+                if action_type == 'name':
                         group_name = data['payload']['group_name']
                         group_collection = []
                         for key,value in group_db.items():
@@ -51,27 +67,29 @@ def group_read(data):
                                         group_collection.append(key)
 
                         response_data = {
-                            'group_name': group_name,
-                            'group_collection': group_collection
+                                'status':'successful',
+                                'group_name': group_name,
+                                'group_collection': group_collection
                         }
                         return response_data
 
 
-                if action_type == 'owner'
-                        group_owner = data['payload']['group_owner']
+                if action_type == 'owner':
+                        group_owner = data['payload']['user_id']
                         group_collection = []
                         for key,value in group_db.items():
                                 if value['group_owner'] == group_owner:
                                         group_collection.append(key)
 
                         response_data = {
-                            'group_owner': group_owner,
-                            'group_collection': group_collection
+                                'status':'successful',
+                                'group_owner': group_owner,
+                                'group_collection': group_collection
                         }
                         return response_data
 
 
-                if action_type == 'visibility'
+                if action_type == 'visibility':
                         visibility = data['payload']['visibility']
                         group_collection = []
                         for key,value in group_db.items():
@@ -79,8 +97,9 @@ def group_read(data):
                                         group_collection.append(key)
 
                         response_data = {
-                            'visibility': visibility,
-                            'group_collection': group_collection
+                                'status':'successful',
+                                'visibility': visibility,
+                                'group_collection': group_collection
                         }
                         return response_data
 
@@ -96,7 +115,7 @@ def group_create(data):
         group_owner_existance = group_read({'payload':{
                 'field_type':'details',
                 'action_type':'owner',
-                'group_name':group_name
+                'group_owner':group_owner
                 }})
 
         if group_owner_existance['status'] == 'successful':
@@ -117,7 +136,7 @@ def group_create(data):
                                 }
                                 return response_data
 
-                new_group_id = 'random string'
+                new_group_id = str(uuid.uuid4())
                 group_db[new_group_id] = {
                         'group_name':group_name,
                         'group_owner': group_owner,
@@ -126,11 +145,12 @@ def group_create(data):
 
                 response_data = {
                         'status': 'successful',
-                        'message': 'Group Created'
+                        'message': 'Group Created',
+                        'group': group_db[new_group_id]
                 }
                 return response_data
 
-        new_group_id = 'random string'
+        new_group_id = str(uuid.uuid4())
         group_db[new_group_id] = {
                 'group_name':group_name,
                 'group_owner': group_owner,
@@ -139,7 +159,8 @@ def group_create(data):
 
         response_data = {
                 'status': 'successful',
-                'message': 'Group Created'
+                'message': 'Group Created',
+                'group': group_db[new_group_id]
         }
         return response_data
 
@@ -264,7 +285,7 @@ def folder_read(data):
         action_type = data['payload']['action_type']
         field_type = data['payload']['field_type']
 
-        if field_type = 'existance':
+        if field_type == 'existance':
                 folder_id = data['payload']['folder_id']
                 if folder_db[folder_id]:
                     response_data = {
@@ -280,9 +301,9 @@ def folder_read(data):
                 return response_data
 
 
-        if field_type = 'details':
+        if field_type == 'details':
 
-                if action_type == 'folder_id'
+                if action_type == 'folder_id':
                         folder_id = data['payload']['folder_id']
                         if folder_db[folder_db]:
 
@@ -295,7 +316,7 @@ def folder_read(data):
                                 return response_data
 
 
-                if action_type == 'name'
+                if action_type == 'name':
                         folder_name = data['payload']['folder_name']
                         folder_collection = []
                         for key,value in folder_db.items():
@@ -308,7 +329,7 @@ def folder_read(data):
                         }
                         return response_data
 
-                if action_type == 'group_id'
+                if action_type == 'group_id':
                         group_id = data['payload']['group_id']
                         folder_collection = []
                         for key,value in folder_db.items():
@@ -321,7 +342,7 @@ def folder_read(data):
                         }
                         return response_data
 
-                if action_type == 'visibility'
+                if action_type == 'visibility':
                         visibility = data['payload']['visibility']
                         folder_collection = []
                         for key,value in folder_db.items():
@@ -543,7 +564,7 @@ def note_read(data):
         action_type = data['payload']['action_type']
         field_type = data['payload']['field_type']
 
-        if field_type = 'existance':
+        if field_type == 'existance':
                 if note_db[note_id]:
                     response_data = {
                         'status': 'successful',
@@ -558,9 +579,9 @@ def note_read(data):
                 return response_data
 
 
-        if field_type = 'details':
+        if field_type == 'details':
 
-                if action_type == 'note_id'
+                if action_type == 'note_id':
                         note_id = data['payload']['note_id']
                         if note_db[note_id]:
 
@@ -575,7 +596,7 @@ def note_read(data):
                                 return response_data
 
 
-                if action_type == 'name'
+                if action_type == 'name':
                         note_name = data['payload']['note_name']
                         note_collection = []
                         for key,value in note_db.items():
@@ -589,7 +610,7 @@ def note_read(data):
                         return response_data
 
 
-                if action_type == 'folder_id'
+                if action_type == 'folder_id':
                         folder_id = data['payload']['folder_id']
                         note_collection = []
                         for key,value in note_db.items():
@@ -603,7 +624,7 @@ def note_read(data):
                         return response_data
 
 
-                if action_type == 'owner'
+                if action_type == 'owner':
                         note_owner = data['payload']['note_owner']
                         note_collection = []
                         for key,value in note_db.items():
@@ -617,7 +638,7 @@ def note_read(data):
                         return response_data
 
 
-                if action_type == 'visibility'
+                if action_type == 'visibility':
                         visibility = data['payload']['visibility']
                         note_collection = []
                         for key,value in note_db.items():

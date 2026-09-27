@@ -1,166 +1,93 @@
 from  fastapi import FastAPI
-import sqlalchemy
-import psycopg2
-import json
+
+from functions.main_function import group_read
+from functions.main_function import group_create
+from functions.main_function import group_update
+from functions.main_function import group_delete
+
+from functions.main_function import folder_read
+from functions.main_function import folder_create
+from functions.main_function import folder_update
+from functions.main_function import folder_delete
+
+from functions.main_function import note_read
+from functions.main_function import note_create
+from functions.main_function import note_update
+from functions.main_function import note_delete
 
 #####################################################################
 app = FastAPI()
 #####################################################################
 
 # --------------------------------------------------------------------
+@app.post("/{params_a}/{params_b}")
+def manage_group(params_a,params_b,data: dict):
 
-@app.get("/group/", )
-def get_group(selection_type: str = 'all',session_id: str = ''):
+    category = ['group','folder','note']
+    allowed_actions = ['read','create','update','delete']
 
-    if selection_type == 'single':
-        http_response = {
-            "endpoint": 'get single group',
-            'session_id': session_id
-        }
-        return  http_response 
- 
-    http_response = {
-        "endpoint": 'get all groups',
-        'session_id': session_id
-    }
-    return  http_response 
+    if params_a not in category:
+        return 'Stick to the Program Pal'
+
+    if params_b not in allowed_actions:
+        return 'Stick to the Program Pal'
 
 
-# --------------------------------------------------------------------
+    if params_a == 'group':
 
-@app.post("/group/")
-def manage_group(data: dict):
+        if params_b == 'read':
+            read_group = group_read(data)
+            return  read_group
 
-    allowed_actions = ['create','update','delete']
+        if params_b == 'create':
+            create_group = group_create(data)
+            return  create_group
 
-    if data['action'] not in allowed_actions:
-        return 'Page is non existant'
+        if params_b == 'update':
+            update_group = group_update(data)
+            return  update_group
 
-    
-    if data['action'] == 'create':
-        http_response = {
-            "endpoint": 'create group',
-            'data' : data
-        }
-        return  http_response 
-
-    if data['action'] == 'update':
-        http_response = {
-            "endpoint": 'update group',
-            'data' : data
-        }
-        return  http_response 
-
-    if data['action'] == 'delete':
-        http_response = {
-            "endpoint": 'delete group',
-            'data' : data
-        }
-        return  http_response 
+        if params_b == 'delete':
+            delete_group = group_delete(data)
+            return  delete_group
 
 
-# --------------------------------------------------------------------
+    if params_a == 'folder':
 
-@app.get("/folder/")
-def get_folder(selection_type: str = 'all',session_id: str = ''):
+        if params_b == 'read':
+            read_folder = folder_read(data)
+            return  read_folder
 
-    if selection_type == 'single':
-        http_response = {
-            "endpoint": 'get single folder',
-        }
-        return  http_response 
+        if params_b == 'create':
+            create_folder = folder_create(data)
+            return  create_folder
 
-    http_response = {
-        "endpoint": 'get all folders',
-    }
-    return  http_response 
+        if params_b == 'update':
+            update_folder = folder_update(data)
+            return  update_folder
 
-# --------------------------------------------------------------------
+        if params_b == 'delete':
+            delete_folder = folder_delete(data)
+            return  delete_folder
 
-@app.post("/folder/")
-def manage_folder(data: str):
 
-    allowed_actions = ['create','update','delete']
+    if params_a == 'note':
 
-    if data['action'] not in allowed_actions:
-        return 'Page is non existant'
+        if params_b == 'read':
+            read_note = note_read(data)
+            return  read_note
 
-    
-    if data['action'] == 'create':
-        http_response = {
-            "endpoint": 'create folder',
-            'data' : data
-        }
-        return  http_response 
+        if params_b == 'create':
+            create_note = note_create(data)
+            return  create_note
 
-    if data['action'] == 'update':
-        http_response = {
-            "endpoint": 'update folder',
-            'data' : data
-        }
-        return  http_response 
+        if params_b == 'update':
+            update_note = note_update(data)
+            return  update_note
 
-    if data['action'] == 'delete':
-        http_response = {
-            "endpoint": 'delete folder',
-            'data' : data
-        }
-        return  http_response 
+        if params_b == 'delete':
+            delete_note = note_delete(data)
+            return  delete_note
 
 
 # --------------------------------------------------------------------
-
-@app.get("/note/")
-def get_note(selection_type: str = 'all',session_id: str = ''):
-
-    if selection_type == 'single':
-        http_response = {
-            "endpoint": 'get single note ',
-        }
-        return  http_response 
-
-    http_response = {
-        "endpoint": 'get all notes',
-    }
-    return  http_response 
-
-
-# --------------------------------------------------------------------
-
-@app.post("/note/")
-def manage_note(data: str):
-
-    allowed_actions = ['create','update','delete']
-
-    if data['action'] not in allowed_actions:
-        return 'Page is non existant'
-    
-
-    if data['action'] == 'create':
-        http_response = {
-            "endpoint": 'create note',
-            'data' : data
-        }
-        return  http_response 
-
-    if data['action'] == 'update':
-        http_response = {
-            "endpoint": 'update note route',
-            'data' : data
-        }
-        return  http_response 
-
-    if data['action'] == 'delete':
-        http_response = {
-            "endpoint": 'delete note',
-            'data' : data
-        }
-        return  http_response 
-
-
-# --------------------------------------------------------------------
-
-
-
-
-
