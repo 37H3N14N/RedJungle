@@ -1,114 +1,66 @@
-from fastapi import FastAPI
-import sqlalchemy
-import psycopg2
-import json
+from  fastapi import FastAPI
+
+from functions.main_function import user_read
+from functions.main_function import user_create
+from functions.main_function import user_update
+from functions.main_function import user_delete
+
+from functions.main_function import session_read
+from functions.main_function import session_create
+from functions.main_function import session_delete
 
 #####################################################################
 app = FastAPI()
 #####################################################################
 
+# --------------------------------------------------------------------
+@app.post("/{params_a}/{params_b}")
+def manage_identity(params_a,params_b,data: dict):
 
-@app.get("/user/")
-def get_user(selection_type: str = 'all',session_id: str = ''):
+    category = ['user','session']
+    allowed_actions = ['read','create','update','delete']
 
-    if selection_type == 'single':
-        http_response = {
-            "endpoint": 'get single user',
-        }
-        return  http_response 
+    if params_a not in category:
+        return 'Stick to the Program Pal'
 
-    http_response = {
-        "endpoint": 'get all users',
-    }
-    return  http_response 
+    if params_b not in allowed_actions:
+        return 'Stick to the Program Pal'
 
 
+    if params_a == 'user':
 
-@app.post("/user/")
-def manage_user(data: dict):
+        if params_b == 'read':
+            read_user = user_read(data)
+            return  read_user
 
-    allowed_actions = ['create','update','delete']
+        if params_b == 'create':
+            create_user = user_create(data)
+            return  create_user
 
-    if data['action'] not in allowed_actions:
-        return 'Page is non existant'
-    
-    
-    if data['action'] == 'create':
-        http_response = {
-            "endpoint": 'create user',
-            "echo_data": data
-        }
-        return  http_response 
+        if params_b == 'update':
+            update_user = user_update(data)
+            return  update_user
 
-    if data['action'] == 'update':
-        http_response = {
-            "endpoint": 'update user',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if data['action'] == 'delete':
-        http_response = {
-            "endpoint": 'delete user',
-            "echo_data": data
-        }
-        return  http_response 
+        if params_b == 'delete':
+            delete_user = user_delete(data)
+            return  delete_user
 
 
+    if params_a == 'session':
 
+        if params_b == 'read':
+            read_session = session_read(data)
+            return  read_session
 
-@app.get("/session/")
-def get_session(selection_type: str = 'all',session_id: str = ''):
+        if params_b == 'create':
+            create_session = session_create(data)
+            return  create_session
 
-    if selection_type == 'single':
-        http_response = {
-            "endpoint": 'get single session',
-        }
-        return  http_response 
-
-    http_response = {
-        "endpoint": 'get all sessions',
-    }
-    return  http_response 
-
-
-
-@app.post("/session/")
-def manage_session(data: dict):
-    
-    allowed_actions = ['create','update','delete']
-
-    if data['action'] not in allowed_actions:
-        return 'Page is non existant'
-    
-    
-    if data['action'] == 'create':
-        http_response = {
-            "endpoint": 'create session',
-            "echo_data": data
-        }
-        return  http_response 
-
-
-    if data['action'] == 'delete':
-        http_response = {
-            "endpoint": 'delete session',
-            "echo_data": data
-        }
-        return  http_response 
+        if params_b == 'delete':
+            delete_session = session_delete(data)
+            return  delete_session
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+# --------------------------------------------------------------------

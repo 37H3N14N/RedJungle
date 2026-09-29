@@ -21,7 +21,7 @@ app = FastAPI()
 
 # --------------------------------------------------------------------
 @app.post("/{params_a}/{params_b}")
-def manage_group(params_a,params_b,data: dict):
+def manage_hierarchy(params_a,params_b,data: dict):
 
     category = ['group','folder','note']
     allowed_actions = ['read','create','update','delete']

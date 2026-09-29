@@ -27,14 +27,14 @@ group_create = {
 -------------------------------------------------------
 group_update = {
     'payload':{
-        'action_type':'group_name',
+        'action_type':'name',
         'group_id':'group_id',
         'new_group_name':'name', or  'visibility':''
         'user_id':'user_id'
     }
 }
 
-action_type = ['group_name','visibility']
+action_type = ['name','visibility']
 
 -------------------------------------------------------
 group_delete = {
@@ -70,14 +70,14 @@ folder_create = {
 -------------------------------------------------------
 folder_update = {
     'payload':{
-        'action_type':'folder_name',
+        'action_type':'name',
         'folder_id':'folder_id',
         'new_folder_name':'name', or 'new_group_id'/'new_visibility'
         'user_id':'user_id'
     }
 }
 
-action_type = ['folder_name','group_id','visibility']
+action_type = ['name','group_id','visibility']
 
 -------------------------------------------------------
 folder_delete = {
@@ -121,13 +121,12 @@ note_update = {
     }
 }
 
-action_type = ['note_name','folder_id','visibility']
+action_type = ['name','folder_id','visibility']
 
 -------------------------------------------------------
 note_delete = {
     'payload':{
         'note_id':'note_id',
-        'folder_id':'folder_id',
         'user_id':'user_id'
     }
 }

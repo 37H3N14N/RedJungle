@@ -1,149 +1,93 @@
 from  fastapi import FastAPI
-import sqlalchemy
-import psycopg2
-import json
+
+from functions.main_function import group_auth_read
+from functions.main_function import group_auth_create
+from functions.main_function import group_auth_update
+from functions.main_function import group_auth_delete
+
+from functions.main_function import folder_auth_read
+from functions.main_function import folder_auth_create
+from functions.main_function import folder_auth_update
+from functions.main_function import folder_auth_delete
+
+from functions.main_function import note_auth_read
+from functions.main_function import note_auth_create
+from functions.main_function import note_auth_update
+from functions.main_function import note_auth_delete
 
 #####################################################################
 app = FastAPI()
 #####################################################################
 
+# --------------------------------------------------------------------
+@app.post("/{params_a}/{params_b}")
+def manage_auth(params_a,params_b,data: dict):
 
-@app.get("/auth/group/")
-def get_group_auth(selection_type: str = 'all',session_id: str = ''):
+    category = ['group','folder','note']
+    allowed_actions = ['read','create','update','delete']
 
-    if selection_type == 'single':
-        http_response = {
-            "endpoint": 'get single group auth',
-        }
-        return  http_response 
+    if params_a not in category:
+        return 'Stick to the Program Pal'
 
-    http_response = {
-        "endpoint": 'get all group auths',
-    }
-    return  http_response 
+    if params_b not in allowed_actions:
+        return 'Stick to the Program Pal'
 
 
-@app.post("/auth/group/")
-def manage_group_auth(data: dict):
+    if params_a == 'group':
 
-    allowed_actions = ['create','update','delete']
+        if params_b == 'read':
+            read_group = group_auth_read(data)
+            return  read_group
 
-    if data['action'] not in allowed_actions:
-        return 'Page is non existant'
-    
+        if params_b == 'create':
+            create_group = group_auth_create(data)
+            return  create_group
 
-    if data['action'] == 'create':
-        http_response = {
-            "endpoint": 'create group auth',
-            "echo_data": data
-        }
-        return  http_response 
+        if params_b == 'update':
+            update_group = group_auth_update(data)
+            return  update_group
 
-    if data['action'] == 'update':
-        http_response = {
-            "endpoint": 'update group auth',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if data['action'] == 'delete':
-        http_response = {
-            "endpoint": 'delete group auth',
-            "echo_data": data
-        }
-        return  http_response 
+        if params_b == 'delete':
+            delete_group = group_auth_delete(data)
+            return  delete_group
 
 
-@app.get("/auth/folder/")
-def get_folder_auth(selection_type: str = 'all',session_id: str = ''):
+    if params_a == 'folder':
 
-    if selection_type == 'single':
-        http_response = {
-            "endpoint": 'get single folder auths',
-        }
-        return  http_response 
+        if params_b == 'read':
+            read_folder = folder_auth_read(data)
+            return  read_folder
 
-    http_response = {
-        "endpoint": 'get all folders auths',
-    }
-    return  http_response 
+        if params_b == 'create':
+            create_folder = folder_auth_create(data)
+            return  create_folder
 
+        if params_b == 'update':
+            update_folder = folder_auth_update(data)
+            return  update_folder
 
-@app.post("/auth/folder/")
-def manage_folder_auth(data: dict):
-    
-    allowed_actions = ['create','update','delete']
-
-    if data['action'] not in allowed_actions:
-        return 'Page is non existant'
-    
-    
-    if data['action'] == 'create':
-        http_response = {
-            "endpoint": 'create folder auth',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if data['action'] == 'update':
-        http_response = {
-            "endpoint": 'update folder auth',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if data['action'] == 'delete':
-        http_response = {
-            "endpoint": 'delete folder auth',
-            "echo_data": data
-        }
-        return  http_response 
+        if params_b == 'delete':
+            delete_folder = folder_auth_delete(data)
+            return  delete_folder
 
 
+    if params_a == 'note':
 
-@app.get("/auth/note/")
-def get_note_auth(selection_type: str = 'all',session_id: str = ''):
+        if params_b == 'read':
+            read_note = note_auth_read(data)
+            return  read_note
 
-    if selection_type == 'single':
-        http_response = {
-            "endpoint": 'get single note auth',
-        }
-        return  http_response 
+        if params_b == 'create':
+            create_note = note_auth_create(data)
+            return  create_note
 
-    http_response = {
-        "endpoint": 'get all note auths',
-    }
-    return  http_response 
+        if params_b == 'update':
+            update_note = note_auth_update(data)
+            return  update_note
 
-
-@app.post("/auth/note/")
-def manage_note_auth(data: dict):
-    
-    allowed_actions = ['create','update','delete']
-
-    if data['action'] not in allowed_actions:
-        return 'Page is non existant'
-    
-    
-    if data['action'] == 'create':
-        http_response = {
-            "endpoint": 'create note auth',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if data['action'] == 'update':
-        http_response = {
-            "endpoint": 'update note auth',
-            "echo_data": data
-        }
-        return  http_response 
-
-    if data['action'] == 'delete':
-        http_response = {
-            "endpoint": 'delete note auth',
-            "echo_data": data
-        }
-        return  http_response 
+        if params_b == 'delete':
+            delete_note = note_auth_delete(data)
+            return  delete_note
 
 
+# --------------------------------------------------------------------
