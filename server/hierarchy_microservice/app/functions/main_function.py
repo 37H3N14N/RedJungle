@@ -685,7 +685,7 @@ def note_read(data):
 
 
                 if action_type == 'owner':
-                        note_owner = data['payload']['note_owner']
+                        note_owner = data['payload']['user_id']
                         note_collection = []
                         for key,value in note_db.items():
                                 if value['note_owner'] == note_owner:
@@ -726,16 +726,16 @@ def note_create(data):
         content_id = data['payload']['content_id']
         visibility = data['payload']['visibility']
 
-        note_owner_existance = note_read({'payload':{
+        note_existance_folder = note_read({'payload':{
                 'field_type':'details',
-                'action_type':'owner',
-                'note_name':note_name
+                'action_type':'folder_id',
+                'folder_id':folder_id
                 }})
 
-        if note_owner_existance['status'] == 'successful':
-                existing_note_names = note_owner_existance['note_collection']
+        if note_existance_folder['status'] == 'successful':
+                existing_note_ids = note_existance_folder['note_collection']
 
-                for note in existing_note_names:
+                for note in existing_note_ids:
 
                         note_detail = note_read({'payload':{
                                 'field_type':'details',
@@ -765,20 +765,6 @@ def note_create(data):
                 }
                 return response_data
 
-        new_note_id = str(uuid.uuid4())
-        note_db[new_note_id] = {
-                'note_name':note_name,
-                'note_owner': note_owner,
-                'folder_id': folder_id,
-                'content_id': content_id,
-                'visibility': visibility
-        }
-
-        response_data = {
-                'status': 'successful',
-                'message': 'Note Created'
-        }
-        return response_data
 
 ######################################################
 
@@ -805,7 +791,7 @@ def note_update(data):
                                 note_name_vacancy = note_read({'payload':{
                                         'field_type': 'details',
                                         'action_type': 'owner',
-                                        'note_owner': user_id
+                                        'user_id': user_id
                                 }})
 
                                 for note in note_name_vacancy['note_collection']:
@@ -838,7 +824,7 @@ def note_update(data):
                                 note_db[note_id]['folder_id'] = new_folder_id
                                 response_data = {
                                     'status': 'successful',
-                                    'message': 'Note visibility changed',
+                                    'message': 'Note folder_id changed',
                                     'folder_id': note_db[note_id]['folder_id']
                                 }
                                 return response_data
@@ -885,6 +871,7 @@ def note_delete(data):
 
 
         if note_existance['status'] == 'successful':
+
                 folder_id = note_existance['folder_id']
 
                 note_parent_details = folder_read({'payload':{
@@ -893,24 +880,34 @@ def note_delete(data):
                         'folder_id': folder_id
                 }})
 
-                folder_parent_details = group_read({'payload':{
-                        'field_type': 'details',
-                        'action_type': 'folder_id',
-                        'folder_id': note_parent_details['group_id']
-                }})
+                if note_parent_details['status'] == 'successful':
 
-                if note_existance['note_owner'] == user_id or folder_parent_details['group_owner'] == user_id:
-                        del note_db[note_id] 
+                        folder_parent_details = group_read({'payload':{
+                                'field_type': 'details',
+                                'action_type': 'group_id',
+                                'group_id': note_parent_details['group_id']
+                        }})
 
-                        response_data = {
-                                'status': 'successful',
-                                'message': 'Note is deleted'
-                        }
-                        return response_data
+                        if folder_parent_details['status'] == 'successful':
+
+                                if note_existance['note_owner'] == user_id or folder_parent_details['group_owner'] == user_id:
+                                        del note_db[note_id] 
+
+                                        response_data = {
+                                                'status': 'successful',
+                                                'message': 'Note is deleted'
+                                        }
+                                        return response_data
+
+                                response_data = {
+                                        'status': 'failed',
+                                        'message': 'User Not Authorized'
+                                }
+                                return response_data
 
                 response_data = {
                         'status': 'failed',
-                        'message': 'User Not Authorized'
+                        'message': 'Folder does not exist'
                 }
                 return response_data
 
