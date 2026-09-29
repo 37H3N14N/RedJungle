@@ -46,7 +46,7 @@ def group_read(data):
                                                 'group_id': group_id,
                                                 'group_name': group_db[group_id]['group_name'],
                                                 'group_owner': group_db[group_id]['group_owner'],
-                                                'visibility': group_db[group_id]['visibility'],
+                                                'visibility': group_db[group_id]['visibility']
                                         }
                                         return response_data
                         except:
@@ -305,20 +305,21 @@ def folder_read(data):
                 if action_type == 'folder_id':
                         folder_id = data['payload']['folder_id']
                         try:
-                                if folder_db[folder_db]:
+                                if folder_db[folder_id]:
 
                                         response_data = {
-                                            'folder_id': folder_id,
-                                            'folder_name': folder_db[folder_id]['folder_name'],
-                                            'group_id': folder_db[folder_id]['group_id'],
-                                            'visibility': folder_db[folder_id]['visibility']
+                                                'status':'successful',
+                                                'folder_id': folder_id,
+                                                'folder_name': folder_db[folder_id]['folder_name'],
+                                                'group_id': folder_db[folder_id]['group_id'],
+                                                'visibility': folder_db[folder_id]['visibility']
                                         }
                                         return response_data
 
                         except:
                                 response_data = {
-                                    'status':'failed',
-                                    'message': 'Folder with that id does not exist'
+                                        'status':'failed',
+                                        'message': 'Folder with that id does not exist'
                                 }
                                 return response_data
 
@@ -331,8 +332,9 @@ def folder_read(data):
                                         folder_collection.append(key)
 
                         response_data = {
-                            'folder_name': folder_name,
-                            'folder_collection': folder_collection
+                                'status':'successful',
+                                'folder_name': folder_name,
+                                'folder_collection': folder_collection
                         }
                         return response_data
 
@@ -344,8 +346,9 @@ def folder_read(data):
                                         folder_collection.append(key)
 
                         response_data = {
-                            'group_id': group_id,
-                            'folder_collection': folder_collection
+                                'status':'successful',
+                                'group_id': group_id,
+                                'folder_collection': folder_collection
                         }
                         return response_data
 
@@ -357,8 +360,9 @@ def folder_read(data):
                                         folder_collection.append(key)
 
                         response_data = {
-                            'visibility': visibility,
-                            'folder_collection': folder_collection
+                                'status':'successful',
+                                'visibility': visibility,
+                                'folder_collection': folder_collection
                         }
                         return response_data
 
@@ -368,76 +372,17 @@ def folder_create(data):
         # folder existance
         # auth / identity
         folder_name = data['payload']['folder_name']
-        group_id = data['payload']['group_id'] # call auth to create folder thing
+        group_id = data['payload']['group_id'] 
+        user_id = data['payload']['user_id'] 
         visibility = data['payload']['visibility']
 
-        folder_owner_existance = folder_read({'payload':{
+        folder_group_existance = folder_read({'payload':{
                 'field_type':'details',
                 'action_type':'group_id',
                 'group_id':group_id
                 }})
 
-        if folder_owner_existance['status'] == 'successful':
-                existing_folder_names = folder_owner_existance['folder_collection']
-
-                for folder in existing_folder_names:
-
-                        folder_detail = folder_read({'payload':{
-                                'field_type':'details',
-                                'action_type':'folder_id',
-                                'folder_id':folder
-                                }})
-
-                        if folder_detail['folder_name'] == folder_name:
-                                response_data = {
-                                    'status': 'failed',
-                                    'message': 'Folder name already in use'
-                                }
-                                return response_data
-
-                new_folder_id = str(uuid.uuid4())
-                folder_db[new_folder_id] = {
-                        'folder_name': folder_name,
-                        'group_id': group_id,
-                        'visibility': visibility
-                }
-
-                response_data = {
-                        'status': 'successful',
-                        'message': 'Folder Created'
-                }
-                return response_data
-
-        new_folder_id = str(uuid.uuid4())
-        folder_db[new_folder_id] = {
-                'folder_name':folder_name,
-                'group_id': group_id,
-                'visibility': visibility,
-        }
-
-        response_data = {
-                'status': 'successful',
-                'message': 'Folder Created'
-        }
-        return response_data
-
-######################################################
-
-def folder_update(data):
-
-        folder_id = data['payload']['folder_id']
-        group_id = data['payload']['group_id']
-        user_id = data['payload']['user_id']
-
-        action_type = data['payload']['action_type']
-
-        folder_existance = folder_read({'payload':{
-                'field_type': 'details',
-                'action_type': 'folder_id',
-                'folder_id': folder_id
-        }})
-
-        if folder_existance['status'] == 'successful':
+        if folder_group_existance['status'] == 'successful':
 
                 folder_parent_data = group_read({'payload':{
                         'field_type': 'details',
@@ -447,63 +392,35 @@ def folder_update(data):
 
                 if folder_parent_data['group_owner'] == user_id:
 
-                        if action_type == 'folder_name':
-                                new_folder_name = data['payload']['new_folder_name']
+                        existing_folder_names = folder_group_existance['folder_collection']
 
-                                folder_name_vacancy = folder_read({'payload':{
-                                        'field_type': 'details',
-                                        'action_type': 'owner',
-                                        'group_owner': user_id
-                                }})
+                        for folder in existing_folder_names:
 
-                                for folder in folder_name_vacancy['folder_collection']:
+                                folder_detail = folder_read({'payload':{
+                                        'field_type':'details',
+                                        'action_type':'folder_id',
+                                        'folder_id':folder
+                                        }})
 
-                                        folder_detail = folder_read({'payload':{
-                                                'field_type':'details',
-                                                'action_type':'folder_id',
-                                                'folder_id':folder
-                                                }})
+                                if folder_detail['folder_name'] == folder_name:
+                                        response_data = {
+                                            'status': 'failed',
+                                            'message': 'Folder name already in use'
+                                        }
+                                        return response_data
 
-                                        if folder_detail['folder_name'] == new_folder_name:
-                                                response_data = {
-                                                    'status': 'failed',
-                                                    'message': 'Folder name already in use'
-                                                }
-                                                return response_data
+                        new_folder_id = str(uuid.uuid4())
+                        folder_db[new_folder_id] = {
+                                'folder_name': folder_name,
+                                'group_id': group_id,
+                                'visibility': visibility
+                        }
 
-                                folder_db[folder_id]['folder_name'] = new_folder_name
-
-                                response_data = {
-                                    'status': 'successful',
-                                    'message': 'Folder name changed',
-                                    'folder_name': folder_db[folder_id]['folder_name']
-                                }
-                                return response_data
-                                
-
-                        if action_type == 'group_id':
-                                new_group_id = data['payload']['new_group_id']
-
-                                folder_db[folder_id]['group_id'] = new_group_id
-
-                                response_data = {
-                                    'status': 'successful',
-                                    'message': 'Folder group changed',
-                                    'group_id': folder_db[folder_id]['group_id']
-                                }
-                                return response_data
-
-
-                        if action_type == 'visibility':
-                                new_visibility = data['payload']['new_visibility']
-
-                                folder_db[folder_id]['visibility'] = new_visibility
-                                response_data = {
-                                    'status': 'successful',
-                                    'message': 'Folder visibility changed',
-                                    'visibility': folder_db[folder_id]['visibility']
-                                }
-                                return response_data
+                        response_data = {
+                                'status': 'successful',
+                                'message': 'Folder Created'
+                        }
+                        return response_data
 
                 response_data = {
                         'status': 'failed',
@@ -511,10 +428,134 @@ def folder_update(data):
                 }
                 return response_data
 
+######################################################
+
+def folder_update(data):
+
+        folder_id = data['payload']['folder_id']
+        user_id = data['payload']['user_id']
+        action_type = data['payload']['action_type']
+
+        folder_existance = folder_read({'payload':{
+                'field_type': 'details',
+                'action_type': 'folder_id',
+                'folder_id': folder_id
+        }})
+
+
+        if folder_existance['status'] == 'successful':
+                group_id = folder_existance['group_id']
+
+                folder_parent_data = group_read({'payload':{
+                        'field_type': 'details',
+                        'action_type': 'group_id',
+                        'group_id': group_id
+                }})
+
+                if folder_parent_data['status'] == 'successful':
+                        if folder_parent_data['group_owner'] == user_id:
+
+                                if action_type == 'folder_name':
+                                        new_folder_name = data['payload']['new_folder_name']
+
+                                        folder_name_vacancy = folder_read({'payload':{
+                                                'field_type': 'details',
+                                                'action_type': 'owner',
+                                                'group_owner': user_id
+                                        }})
+
+                                        for folder in folder_name_vacancy['folder_collection']:
+
+                                                folder_detail = folder_read({'payload':{
+                                                        'field_type':'details',
+                                                        'action_type':'folder_id',
+                                                        'folder_id':folder
+                                                        }})
+
+                                                if folder_detail['folder_name'] == new_folder_name:
+                                                        response_data = {
+                                                            'status': 'failed',
+                                                            'message': 'Folder name already in use'
+                                                        }
+                                                        return response_data
+
+                                        folder_db[folder_id]['folder_name'] = new_folder_name
+
+                                        response_data = {
+                                            'status': 'successful',
+                                            'message': 'Folder name changed',
+                                            'folder_name': folder_db[folder_id]['folder_name']
+                                        }
+                                        return response_data
+
+
+                                if action_type == 'group_id':
+                                        new_group_id = data['payload']['new_group_id']
+                                        # check if new_group has similar folder name 
+                                        # if not then migration passes
+                                        current_folder_detail = folder_read({'payload':{
+                                                'field_type':'details',
+                                                'action_type':'folder_id',
+                                                'folder_id':folder_id
+                                                }})
+
+                                        folder_names_used = folder_read({'payload':{
+                                                'field_type': 'details',
+                                                'action_type': 'group_id',
+                                                'group_id': new_group_id
+                                        }})
+
+                                        for folder in folder_names_used['folder_collection']:
+
+                                                folder_detail = folder_read({'payload':{
+                                                        'field_type':'details',
+                                                        'action_type':'folder_id',
+                                                        'folder_id':folder
+                                                        }})
+
+                                                if folder_detail['folder_name'] == current_folder_detail['folder_name']:
+                                                        response_data = {
+                                                            'status': 'failed',
+                                                            'message': 'Folder name already in use'
+                                                        }
+                                                        return response_data
+
+                                        folder_db[folder_id]['group_id'] = new_group_id
+
+                                        response_data = {
+                                            'status': 'successful',
+                                            'message': 'Folder group changed',
+                                            'group_id': folder_db[folder_id]['group_id']
+                                        }
+                                        return response_data
+
+
+                                if action_type == 'visibility':
+                                        new_visibility = data['payload']['new_visibility']
+
+                                        folder_db[folder_id]['visibility'] = new_visibility
+                                        response_data = {
+                                            'status': 'successful',
+                                            'message': 'Folder visibility changed',
+                                            'visibility': folder_db[folder_id]['visibility']
+                                        }
+                                        return response_data
+
+                        response_data = {
+                                'status': 'failed',
+                                'message': 'User not Authorized'
+                        }
+                        return response_data
+
+                response_data = {
+                        'status': 'failed',
+                        'message': 'Group does not exist'
+                }
+                return response_data
 
         response_data = {
                 'status': 'failed',
-                'message': 'Group does not exist'
+                'message': 'Folder does not exist'
         }
         return response_data
 
@@ -523,22 +564,24 @@ def folder_update(data):
 def folder_delete(data):
         # folder existance
         # auth / identity
-        folder_id = data['payload']['group_id']
-        group_id = data['payload']['group_id']
+        folder_id = data['payload']['folder_id']
         user_id = data['payload']['user_id']
 
-        folder_existance = folder_read({'payload':{
-                'field_type': 'existance',
+        folder_existance_details = folder_read({'payload':{
+                'field_type': 'details',
+                'action_type': 'folder_id',
                 'folder_id': folder_id
         }})
 
-        folder_parent_details = group_read({'payload':{
-                'field_type': 'details',
-                'action_type': 'group_id',
-                'group_id': group_id,
-        }})
 
-        if folder_existance['status'] == 'successful':
+        if folder_existance_details['status'] == 'successful':
+
+                folder_parent_details = group_read({'payload':{
+                        'field_type': 'details',
+                        'action_type': 'group_id',
+                        'group_id': folder_existance_details['group_id'],
+                }})
+
                 if folder_parent_details['group_owner'] == user_id:
                         del folder_db[folder_id] 
 
@@ -594,12 +637,13 @@ def note_read(data):
                                 if note_db[note_id]:
 
                                         response_data = {
-                                            'note_id': note_id,
-                                            'note_name': note_db[note_id]['note_name'],
-                                            'note_owner': note_db[note_id]['note_owner'],
-                                            'folder_id': note_db[note_id]['folder_id'],
-                                            'content_id': note_db[note_id]['content_id'],
-                                            'visibility': note_db[note_id]['visibility']
+                                                'status': 'successful',
+                                                'note_id': note_id,
+                                                'note_name': note_db[note_id]['note_name'],
+                                                'note_owner': note_db[note_id]['note_owner'],
+                                                'folder_id': note_db[note_id]['folder_id'],
+                                                'content_id': note_db[note_id]['content_id'],
+                                                'visibility': note_db[note_id]['visibility']
                                         }
                                         return response_data
                         
@@ -618,8 +662,9 @@ def note_read(data):
                                         note_collection.append(key)
 
                         response_data = {
-                            'note_name': note_name,
-                            'note_collection': note_collection
+                                'status': 'successful',
+                                'note_name': note_name,
+                                'note_collection': note_collection
                         }
                         return response_data
 
@@ -632,8 +677,9 @@ def note_read(data):
                                         note_collection.append(key)
 
                         response_data = {
-                            'folder_id': folder_id,
-                            'note_collection': note_collection
+                                'status': 'successful',
+                                'folder_id': folder_id,
+                                'note_collection': note_collection
                         }
                         return response_data
 
@@ -646,8 +692,9 @@ def note_read(data):
                                         note_collection.append(key)
 
                         response_data = {
-                            'note_owner': note_owner,
-                            'note_collection': note_collection
+                                'status': 'successful',
+                                'note_owner': note_owner,
+                                'note_collection': note_collection
                         }
                         return response_data
 
@@ -660,8 +707,9 @@ def note_read(data):
                                         note_collection.append(key)
 
                         response_data = {
-                            'visibility': visibility,
-                            'note_collection': note_collection
+                                'status': 'successful',
+                                'visibility': visibility,
+                                'note_collection': note_collection
                         }
                         return response_data
 
@@ -827,7 +875,6 @@ def note_delete(data):
         # note existance
         # auth / identity
         note_id = data['payload']['note_id']
-        folder_id = data['payload']['folder_id']
         user_id = data['payload']['user_id']
 
         note_existance = note_read({'payload':{
@@ -838,6 +885,7 @@ def note_delete(data):
 
 
         if note_existance['status'] == 'successful':
+                folder_id = note_existance['folder_id']
 
                 note_parent_details = folder_read({'payload':{
                         'field_type': 'details',

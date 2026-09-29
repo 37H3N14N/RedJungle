@@ -62,6 +62,7 @@ folder_create = {
     'payload':{
         'folder_name':'somename',
         'group_id':'group_id',
+        'user_id':'user_id',
         'visibility':'public'
     }
 }
@@ -71,7 +72,6 @@ folder_update = {
     'payload':{
         'action_type':'folder_name',
         'folder_id':'folder_id',
-        'group_id':'group_id',
         'new_folder_name':'name', or 'new_group_id'/'new_visibility'
         'user_id':'user_id'
     }
@@ -83,7 +83,6 @@ action_type = ['folder_name','group_id','visibility']
 folder_delete = {
     'payload':{
         'folder_id':'folder_id',
-        'group_id':'group_id',
         'user_id':'user_id'
     }
 }
@@ -116,7 +115,7 @@ note_create = {
 note_update = {
     'payload':{
         'action_type':'note_name',
-        'note_id':'folder_id',
+        'note_id':'note_id',
         'user_id':'user_id',
         'new_note_name':'name', or 'new_folder_id'/'new_visibility'
     }
