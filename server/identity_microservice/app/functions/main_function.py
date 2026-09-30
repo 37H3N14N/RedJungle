@@ -268,14 +268,14 @@ def session_create(data):
 
         session_existance = session_read({'payload': {
                 'field_type': 'existance',
-                'action_type': 'user_id'
+                'action_type': 'user_id',
                 'user_id': user_id
                 }})
 
         if session_existance['status'] == 'successful':
                 response_data = {
                         'status': 'failed',
-                        'message': 'session already exists'
+                        'message': 'session already exists',
                         'session_id': session_existance['session_id']
                 }
                 return response_data

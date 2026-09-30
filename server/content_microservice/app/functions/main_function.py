@@ -12,66 +12,66 @@ def content_read(data):
     field_type = data['payload']['field_type']
     user_id = data['payload']['user_id']
 
-        if field_type = 'existance':
-                content_id = data['payload']['content_id']
+    if field_type == 'existance':
+            content_id = data['payload']['content_id']
 
-                if content_db[content_id]:
-                    response_data = {
-                        'status': 'successful',
-                        'message': 'content exists',
-                    }
-                    return response_data
-
+            if content_db[content_id]:
                 response_data = {
-                    'status':'failed',
-                    'message': 'content with that id does not exist'
+                    'status': 'successful',
+                    'message': 'content exists',
                 }
                 return response_data
 
-
-        if field_type = 'details':
-
-                if action_type == 'content_id'
-                        content_id = data['payload']['content_id']
-                        if content_db[content_id]:
-
-                                response_data = {
-                                    'content_id': content_id,
-                                    'note_id': content_db[content_id]['note_id'],
-                                    'group_id': content_db[content_id]['group_id'],
-                                    'folder_id': content_db[content_id]['folder_id'],
-                                    'contents': content_db[content_id]['contents']
-                                }
-                                return response_data
+            response_data = {
+                'status':'failed',
+                'message': 'content with that id does not exist'
+            }
+            return response_data
 
 
-                if action_type == 'group_id'
-                        group_id = data['payload']['group_id']
+    if field_type == 'details':
 
-                        content_collection = []
-                        for key,value in content.items():
-                                if value['group_id'] == group_id:
-                                        content_collection.append(key)
+            if action_type == 'content_id':
+                    content_id = data['payload']['content_id']
+                    if content_db[content_id]:
 
-                        response_data = {
-                            'group_id': group_id,
-                            'content_collection': content_collection
-                        }
-                        return response_data
+                            response_data = {
+                                'content_id': content_id,
+                                'note_id': content_db[content_id]['note_id'],
+                                'group_id': content_db[content_id]['group_id'],
+                                'folder_id': content_db[content_id]['folder_id'],
+                                'contents': content_db[content_id]['contents']
+                            }
+                            return response_data
 
-                if action_type == 'folder_id'
-                        folder_id = data['payload']['folder_id']
 
-                        content_collection = []
-                        for key,value in content.items():
-                                if value['folder_id'] == folder_id:
-                                        content_collection.append(key)
+            if action_type == 'group_id':
+                    group_id = data['payload']['group_id']
 
-                        response_data = {
-                            'folder_id': folder_id,
-                            'content_collection': content_collection
-                        }
-                        return response_data
+                    content_collection = []
+                    for key,value in content.items():
+                            if value['group_id'] == group_id:
+                                    content_collection.append(key)
+
+                    response_data = {
+                        'group_id': group_id,
+                        'content_collection': content_collection
+                    }
+                    return response_data
+
+            if action_type == 'folder_id':
+                    folder_id = data['payload']['folder_id']
+
+                    content_collection = []
+                    for key,value in content.items():
+                            if value['folder_id'] == folder_id:
+                                    content_collection.append(key)
+
+                    response_data = {
+                        'folder_id': folder_id,
+                        'content_collection': content_collection
+                    }
+                    return response_data
 
 
 ###################################################

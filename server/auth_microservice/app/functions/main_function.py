@@ -13,7 +13,7 @@ def group_auth_read(data):
     field_type = data['payload']['field_type']
     group_id = data['payload']['group_id']
 
-    if field_type = 'existance':
+    if field_type == 'existance':
         if auth_group_db[group_id]:
             response_data = {
                 'status': 'successful',
@@ -28,7 +28,7 @@ def group_auth_read(data):
         return response_data
 
 
-    if field_type = 'details':
+    if field_type == 'details':
 
         if auth_group_db[group_id]:
             response_data = {
@@ -141,7 +141,7 @@ def group_auth_delete(data):
         }})
 
     if group_existance['status'] == 'successful':
-       auth_group_db[group_id] = None 
+        auth_group_db[group_id] = None 
 
         response_data = {
             'status': 'successful',
@@ -166,7 +166,7 @@ def folder_auth_read(data):
     field_type = data['payload']['field_type']
     folder_id = data['payload']['folder_id']
 
-    if field_type = 'existance':
+    if field_type == 'existance':
         if auth_folder_db[folder_id]:
             response_data = {
                 'status': 'successful',
@@ -181,7 +181,7 @@ def folder_auth_read(data):
         return response_data
 
 
-    if field_type = 'details':
+    if field_type == 'details':
 
         if auth_folder_db[folder_id]:
             response_data = {
@@ -328,7 +328,7 @@ def folder_auth_delete(data):
         }})
 
     if folder_existance['status'] == 'successful':
-       auth_folder_db[folder_id] = None 
+        auth_folder_db[folder_id] = None 
 
         response_data = {
             'status': 'successful',
@@ -352,7 +352,7 @@ def note_auth_read(data):
     field_type = data['payload']['field_type']
     note_id = data['payload']['note_id']
 
-    if field_type = 'existance':
+    if field_type == 'existance':
         if auth_note_db[note_id]:
             response_data = {
                 'status': 'successful',
@@ -367,7 +367,7 @@ def note_auth_read(data):
         return response_data
 
 
-    if field_type = 'details':
+    if field_type == 'details':
 
         if auth_note_db[note_id]:
             response_data = {
@@ -516,7 +516,7 @@ def note_auth_delete(data):
         }})
 
     if note_existance['status'] == 'successful':
-       auth_note_db[note_id] = None 
+        auth_note_db[note_id] = None 
 
         response_data = {
             'status': 'successful',
