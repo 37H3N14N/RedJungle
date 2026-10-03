@@ -1,4 +1,6 @@
-from  fastapi import FastAPI
+from  fastapi import FastAPI, status
+from fastapi.responses import JSONResponse
+
 
 from functions.main_function import user_read
 from functions.main_function import user_create
@@ -21,10 +23,18 @@ def manage_identity(params_a,params_b,data: dict):
     allowed_actions = ['read','create','update','delete']
 
     if params_a not in category:
-        return 'Stick to the Program Pal'
+
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND,
+            content={"error": "Stick to the Program Pal"}
+        )
 
     if params_b not in allowed_actions:
-        return 'Stick to the Program Pal'
+
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND,
+            content={"error": "Stick to the Program Pal"}
+        )
 
 
     if params_a == 'user':

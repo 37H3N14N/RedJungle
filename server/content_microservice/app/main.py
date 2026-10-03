@@ -1,4 +1,5 @@
-from  fastapi import FastAPI
+from  fastapi import FastAPI, status
+from fastapi.responses import JSONResponse
 
 from functions.main_function import content_read
 from functions.main_function import content_create
@@ -13,6 +14,14 @@ app = FastAPI()
 @app.post("/{params_b}")
 def manage_content(params_b,data: dict):
 
+    allowed_actions = ['read','create','update','delete']
+
+    if params_b not in allowed_actions:
+
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND,
+            content={"error": "Stick to the Program Pal"}
+        )
 
     if params_b == 'read':
         read_content = content_read(data)
