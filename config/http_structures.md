@@ -323,7 +323,7 @@ content_delete = {
 -------------------------------------------------------
 user_read = {
     'payload':{
-        'field_type':'details',
+        'field_type':'existance',
         'user_id':'user_id'
     }
 }
@@ -333,8 +333,8 @@ field_type = ['existance','details']
 user_read = {
     'payload':{
         'field_type':'details',
-        'action_type':'name',
-        'user_id':'somename' or 'group_id'/'owner'/'visibility'
+        'action_type':'email',
+        'email':'some@email.com' or 'user_id'
     }
 }
 

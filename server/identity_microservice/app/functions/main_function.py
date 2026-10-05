@@ -35,21 +35,21 @@ def user_read(data):
 
                 if action_type == 'email':
                         email = data['payload']['email']
-
-                        if user_db[email]:
+                        try:
+                                if user_db[email]:
+                                        response_data = {
+                                                'status': 'successful',
+                                                'user_id': user_db['email']['user_id'],
+                                                'hashcode': user_db['email']['hashcode']
+                                        }
+                                        return response_data
+                        except:
                                 response_data = {
-                                        'status': 'successful',
-                                        'user_id': user_db['email']['user_id'],
-                                        'hashcode': user_db['email']['hashcode']
+                                        'status': 'failed',
+                                        'email': email,
+                                        'message': 'email is invalid'
                                 }
-                                return response_data
-
-                        response_data = {
-                                'status': 'failed',
-                                'email': email,
-                                'message': 'email is invalid'
-                        }
-                        return  response_data
+                                return  response_data
 
                 if action_type == 'user_id':
                         user_id = data['payload']['user_id']
@@ -86,18 +86,19 @@ def user_create(data):
                 'email': email
         }})
 
-        if user_existance['status'] == successful:
+        if user_existance['status'] == 'successful':
                 response_data = {
                         'status': 'failed',
                         'message': 'email already in use'
                 }
                 return response_data
 
+        new_user_id = str(uuid.uuid4())
         user_db[email] = {
-                'user_id': 'random_string',
-                'hashcode': current_hashcode
+                'user_id': new_user_id,
+                'hashcode': hashcode
                 }
-        session_id = session_create(user_db[email]['user_id'])
+        session_id = session_create({"payload":{"user_id":user_db[email]['user_id']}})
 
         response_data = {
                 'status': 'successful',
@@ -282,7 +283,7 @@ def session_create(data):
 
 
         if session_existance['status'] == 'failed':
-                new_session_id = 'random string'
+                new_session_id = str(uuid.uuid4())
 
                 session_db[new_session_id] = {
                         'user_id': user_id,
