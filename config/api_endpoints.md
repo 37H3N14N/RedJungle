@@ -50,12 +50,12 @@
     [ Content ]
 
 {POST} = ['post with necessary payload']
--> [/content/create]
--> [/content/update]
--> [/content/delete] 
+-> [/create]
+-> [/update]
+-> [/delete] 
 
 {GET} = ['uri with neccessary input']
--> [/content/read] 
+-> [/read] 
 
 
 

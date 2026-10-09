@@ -23,7 +23,7 @@ frontend/curl -> nginx -> internal_microservices :
 { get/post } = [ /group, /folder, /note ]
 
 -> [v4 {/content} ] = content:
-{ get/post } = [ /content ]
+{ get/post } = [ /CRUD ]
 
 # DB SCHEMATICS [service -> service {ACL} ] => For cascading CRUD funtions... Later
 # -> hierarchy 

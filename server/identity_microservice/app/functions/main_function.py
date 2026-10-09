@@ -34,20 +34,21 @@ def user_read(data):
                 action_type = data['payload']['action_type']
 
                 if action_type == 'email':
-                        email = data['payload']['email']
+
                         try:
+                                email = data['payload']['email']
                                 if user_db[email]:
                                         response_data = {
                                                 'status': 'successful',
-                                                'user_id': user_db['email']['user_id'],
-                                                'hashcode': user_db['email']['hashcode']
+                                                'user_id': user_db[email]['user_id'],
+                                                'hashcode': user_db[email]['hashcode']
                                         }
                                         return response_data
                         except:
                                 response_data = {
                                         'status': 'failed',
                                         'email': email,
-                                        'message': 'email is invalid'
+                                        'message': 'email does not exist'
                                 }
                                 return  response_data
 
@@ -85,6 +86,7 @@ def user_create(data):
                 'action_type': 'email',
                 'email': email
         }})
+        print(user_existance)
 
         if user_existance['status'] == 'successful':
                 response_data = {
@@ -98,6 +100,7 @@ def user_create(data):
                 'user_id': new_user_id,
                 'hashcode': hashcode
                 }
+
         session_id = session_create({"payload":{"user_id":user_db[email]['user_id']}})
 
         response_data = {
@@ -117,12 +120,13 @@ def user_update(data):
 
         session_existance = session_read({'payload': {
                 'field_type': 'details',
-                'action_type': 'session_id',
                 'session_id': session_id
                 }})
 
         if session_existance['status'] == 'successful':
                 session_user_id = session_existance['user_id']
+                print(session_user_id)
+
                 saved_user_data = user_read({'payload': {
                         'field_type': 'details',
                         'action_type': 'user_id',
@@ -131,8 +135,8 @@ def user_update(data):
 
                 saved_session_hashcode = saved_user_data['hashcode']
                 
-                if saved_user_data == old_hashcode:
-                        user_db[session_user_id]['hashcode'] == new_hashcode
+                if saved_session_hashcode == old_hashcode:
+                        user_db[saved_user_data['email']]['hashcode'] = new_hashcode
 
                         response_data = {
                                 'status': 'successful',
@@ -162,22 +166,28 @@ def user_delete(data):
 
         session_existance = session_read({'payload': {
                 'field_type': 'details',
-                'action_type': 'session_id',
                 'session_id': session_id
                 }})
 
         if session_existance['status'] == 'successful':
+
                 session_user_id = session_existance['user_id']
+
                 session_user_data = user_read({'payload': {
                         'field_type': 'details',
                         'action_type': 'user_id',
                         'user_id': session_user_id
                 }})
+
                 session_user_hashcode = session_user_data['hashcode']
+
                 session_user_email = session_user_data['email']
 
                 if session_user_hashcode == hashcode:
-                        user_db[session_user_email] == None
+
+                        session_delete({'payload':{'session_id':session_id,'hashcode':hashcode}})
+
+                        del user_db[session_user_email]
 
                         response_data = {
                                 'status': 'successful',
@@ -207,21 +217,21 @@ def session_read(data):
         field_type = data['payload']['field_type']
 
         if field_type == 'details':
-                session_id = data['payload']['session_id']
-
-                if session_db[session_id]: 
+                try:
+                        session_id = data['payload']['session_id']
+                        if session_db[session_id]: 
+                                response_data = {
+                                        'status': 'successful',
+                                        'user_id': session_db[session_id]['user_id'],
+                                        'session_status': session_db[session_id]['status']
+                                }
+                                return response_data
+                except:
                         response_data = {
-                                'status': 'successful',
-                                'user_id': session_db[session_id]['user_id'],
-                                'session_status': session_db[session_id]['status']
+                                'status': 'failed',
+                                'message': 'session_id does not exist'
                         }
-                        return response_data
-
-                response_data = {
-                        'status': 'failed',
-                        'message': 'session_id does not exist'
-                }
-                return  response_data
+                        return  response_data
 
         if field_type == 'existance':
                 action_type = data['payload']['action_type']
@@ -305,22 +315,26 @@ def session_delete(data):
 
         session_existance = session_read({'payload': {
                 'field_type': 'details',
-                'action_type': 'session_id',
                 'session_id': session_id
                 }})
 
         if session_existance['status'] == 'successful':
+
                 session_user_id = session_existance['user_id']
+
                 session_user_data = user_read({'payload': {
                         'field_type': 'details',
                         'action_type': 'user_id',
                         'user_id': session_user_id
                 }})
+
                 session_user_hashcode = session_user_data['hashcode']
+
                 session_user_email = session_user_data['email']
 
                 if session_user_hashcode == hashcode:
-                        session_db[session_id] == None
+
+                        del session_db[session_id]
 
                         response_data = {
                                 'status': 'successful',

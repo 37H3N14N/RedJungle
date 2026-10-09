@@ -293,8 +293,8 @@ content_create = {
     'payload':{
         'note_id':'note_id',
         'group_id':'group_id',
-        'folder_id':'folder_id',
-        'contents':[]
+        'folder_id':'folder_id'
+        'contents':""
     }
 }
 
@@ -369,14 +369,14 @@ user_delete = {
 -------------------------------------------------------
 session_read = {
     'payload':{
-        'field_type':'details',
+        'field_type':'existance',
         'sesion_id':'session_id'
     }
 }
 
 field_type = ['existance','details']
 
-user_read = {
+session_read = {
     'payload':{
         'field_type':'existance',
         'action_type':'session_id',

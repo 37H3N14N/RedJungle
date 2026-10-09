@@ -14,8 +14,6 @@
 Tasks:
 
 > Bug fixes:
-    - identity
-    - content
     - auth
 
 > Access Control Implemetation:
@@ -24,6 +22,7 @@ Tasks:
 > Cascading/Connected-ness:
     - all
 
+> parameter pollution of ['action_type' and other fields ] to be confined similar to confined uri endpoints
 
 
 

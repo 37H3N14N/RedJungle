@@ -141,7 +141,7 @@ def group_auth_delete(data):
         }})
 
     if group_existance['status'] == 'successful':
-        auth_group_db[group_id] = None 
+        del auth_group_db[group_id]
 
         response_data = {
             'status': 'successful',
@@ -328,7 +328,7 @@ def folder_auth_delete(data):
         }})
 
     if folder_existance['status'] == 'successful':
-        auth_folder_db[folder_id] = None 
+        del auth_folder_db[folder_id]
 
         response_data = {
             'status': 'successful',
@@ -516,7 +516,7 @@ def note_auth_delete(data):
         }})
 
     if note_existance['status'] == 'successful':
-        auth_note_db[note_id] = None 
+        del auth_note_db[note_id]
 
         response_data = {
             'status': 'successful',
