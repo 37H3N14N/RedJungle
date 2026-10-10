@@ -14,13 +14,13 @@
 Tasks:
 
 > Bug fixes:
-    - auth
+    - auth [update & delete] for all functions
 
 > Access Control Implemetation:
     - all 
 
 > Cascading/Connected-ness:
-    - all
+    - inter micro-service comms
 
 > parameter pollution of ['action_type' and other fields ] to be confined similar to confined uri endpoints
 

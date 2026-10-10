@@ -237,7 +237,6 @@ field_type = ['existance','details']
 note_auth_create = {
     'payload':{
         'note_id':'note_id',
-        'group_id':'group_id',
         'folder_id':'folder_id',
         'collaborators':[]
     }

@@ -14,34 +14,43 @@ def group_auth_read(data):
     group_id = data['payload']['group_id']
 
     if field_type == 'existance':
-        if auth_group_db[group_id]:
+
+        try:
+
+            if auth_group_db[group_id]:
+                response_data = {
+                    'status': 'successful',
+                    'message': 'group exists',
+                }
+                return response_data
+
+        except:
+
             response_data = {
-                'status': 'successful',
-                'message': 'group exists',
+                'status':'failed',
+                'message': 'Group with that id does not exist'
             }
             return response_data
-
-        response_data = {
-            'status':'failed',
-            'message': 'Group with that id does not exist'
-        }
-        return response_data
 
 
     if field_type == 'details':
 
-        if auth_group_db[group_id]:
-            response_data = {
-                'status': 'success',
-                'members': auth_group_db[group_id]['members']
-            }
-            return response_data
+        try:
 
-        response_data = {
-            'status': 'failed',
-            'message': 'Group with that id does not exist'
-        }
-        return response_data  
+            if auth_group_db[group_id]:
+                response_data = {
+                    'status': 'successful',
+                    'members': auth_group_db[group_id]['members']
+                }
+                return response_data
+
+        except:
+
+            response_data = {
+                'status': 'failed',
+                'message': 'Group with that id does not exist'
+            }
+            return response_data  
 
 ###################################################
 
@@ -65,7 +74,7 @@ def group_auth_create(data):
         return response_data
 
 
-    group_auth_db[group_id] = {'members': members}
+    auth_group_db[group_id] = {'members': members}
     response_data = {
         'status': 'successful',
         'message': 'Group ACL created'
@@ -167,36 +176,46 @@ def folder_auth_read(data):
     folder_id = data['payload']['folder_id']
 
     if field_type == 'existance':
-        if auth_folder_db[folder_id]:
+
+        try:
+
+            if auth_folder_db[folder_id]:
+                response_data = {
+                    'status': 'successful',
+                    'message': 'folder exists'
+                }
+                return response_data
+
+        except:
+
             response_data = {
-                'status': 'successful',
-                'message': 'folder exists'
+                'status':'failed',
+                'message': 'Folder with that id does not exist'
             }
             return response_data
-
-        response_data = {
-            'status':'failed',
-            'message': 'Folder with that id does not exist'
-        }
-        return response_data
 
 
     if field_type == 'details':
 
-        if auth_folder_db[folder_id]:
-            response_data = {
-                'status': 'success',
-                'group_id': auth_folder_db[folder_id]['group_id'],
-                'admin_id': auth_folder_db[folder_id]['admin_id'],
-                'members': auth_folder_db[folder_id]['members']
-            }
-            return response_data
+        try:
 
-        response_data = {
-            'status': 'failed',
-            'message': 'Folder with that id does not exist'
-        }
-        return response_data  
+            if auth_folder_db[folder_id]:
+                response_data = {
+                    'status': 'successful',
+                    'group_id': auth_folder_db[folder_id]['group_id'],
+                    'admin_id': auth_folder_db[folder_id]['admin_id'],
+                    'members': auth_folder_db[folder_id]['members']
+                }
+                return response_data
+
+        except:
+
+            response_data = {
+                'status': 'failed',
+                'message': 'Folder with that id does not exist'
+            }
+            return response_data  
+
 
 ###################################################
 
@@ -206,33 +225,62 @@ def folder_auth_create(data):
     folder_id = data['payload']['folder_id']
     group_id = data['payload']['group_id']
     members = data['payload']['members']
-    admin_id = ''
+    admin_id = data['payload']['user_id']
 
     folder_existance = folder_auth_read({'payload': {
         'field_type':'existance',
         'folder_id': folder_id
         }})
 
-    if folder_existance['status'] == 'successful':
-        response_data = {
-            'status': 'failed',
-            'message': 'Folder ACL setup already in place'
-        }
-        return response_data
+    group_existance = group_auth_read({'payload': {
+        'field_type':'details',
+        'group_id': group_id
+        }})
 
-    if folder_existance['status'] == 'failed':
+    if group_existance['status'] == 'successful':
 
-        auth_folder_db[folder_id] = {
-            'group_id': group_id,
-            'admin_id': admin_id,
-            'members': members
+        if folder_existance['status'] == 'successful':
+
+            response_data = {
+                'status': 'failed',
+                'message': 'Folder ACL setup already in place'
             }
+            return response_data
 
-        response_data = {
-            'status': 'successful',
-            'message': 'Folder ACL created'
-        }
-        return response_data
+        if folder_existance['status'] == 'failed':
+
+            group_members = group_existance['members']
+            selected_folder_members = []
+
+            for individual_member in members:
+
+                if individual_member not in group_members:
+                    print(f'{individual_member} not in Group ACL') 
+
+                if individual_member in group_members:
+                    selected_folder_members.append(individual_member)
+
+
+            auth_folder_db[folder_id] = {
+                'group_id': group_id,
+                'admin_id': admin_id,
+                'members': selected_folder_members
+                }
+
+            response_data = {
+                'status': 'successful',
+                'message': 'Folder ACL created',
+                'folder_id': folder_id,
+                'members': auth_folder_db[folder_id]['members']
+            }
+            return response_data
+
+    response_data = {
+        'status': 'failed',
+        'message': 'Group does not exist'
+    }
+    return response_data
+
 
 ###################################################
 
@@ -353,37 +401,45 @@ def note_auth_read(data):
     note_id = data['payload']['note_id']
 
     if field_type == 'existance':
-        if auth_note_db[note_id]:
+
+        try:
+
+            if auth_note_db[note_id]:
+                response_data = {
+                    'status': 'successful',
+                    'message': 'note exists',
+                }
+                return response_data
+
+        except:
+
             response_data = {
-                'status': 'successful',
-                'message': 'note exists',
+                'status':'failed',
+                'message': 'Note with that id does not exist'
             }
             return response_data
-
-        response_data = {
-            'status':'failed',
-            'message': 'Note with that id does not exist'
-        }
-        return response_data
 
 
     if field_type == 'details':
 
-        if auth_note_db[note_id]:
-            response_data = {
-                'status': 'success',
-                'group_id': auth_note_db[note_id]['group_id'],
-                'folder_id': auth_note_db[note_id]['folder_id'],
-                'content_id': auth_note_db[note_id]['content_id'],
-                'collaborators': auth_note_db[note_id]['collaborators']
-            }
-            return response_data
+        try:
 
-        response_data = {
-            'status': 'failed',
-            'message': 'Note with that id does not exist'
-        }
-        return response_data  
+            if auth_note_db[note_id]:
+                response_data = {
+                    'status': 'successful',
+                    'folder_id': auth_note_db[note_id]['folder_id'],
+                    'content_id': auth_note_db[note_id]['content_id'],
+                    'collaborators': auth_note_db[note_id]['collaborators']
+                }
+                return response_data
+
+        except:
+
+            response_data = {
+                'status': 'failed',
+                'message': 'Note with that id does not exist'
+            }
+            return response_data  
 
 ###################################################
 
@@ -391,13 +447,17 @@ def note_auth_create(data):
     # note id existance
     # member / identity
     note_id = data['payload']['note_id']
-    group_id = data['payload']['group_id']
     folder_id = data['payload']['folder_id']
     collaborators = data['payload']['collaborators']
 
     note_existance = note_auth_read({'payload': {
         'field_type':'existance',
         'note_id': note_id
+        }})
+
+    folder_existance = folder_auth_read({'payload': {
+        'field_type':'details',
+        'folder_id': folder_id
         }})
 
     if note_existance['status'] == 'successful':
@@ -407,19 +467,40 @@ def note_auth_create(data):
         }
         return response_data
 
-    if note_existance['status'] == 'failed':
+    if folder_existance['status'] == 'successful':
 
-        auth_note_db[note_id] = {
-            'group_id': group_id,
-            'folder_id': folder_id,
-            'collaborators': collaborators
+        if note_existance['status'] == 'failed':
+
+            folder_members = folder_existance['members']
+            selected_note_collaborators = []
+
+            for individual_member in collaborators:
+
+                if individual_member not in folder_members:
+                    print(f'{individual_member} not in Folder ACL') 
+
+                if individual_member in folder_members:
+                    selected_note_collaborators.append(individual_member)
+
+
+            auth_note_db[note_id] = {
+                'folder_id': folder_id,
+                'collaborators': selected_note_collaborators
+                }
+
+            response_data = {
+                'status': 'successful',
+                'message': 'Note ACL created',
+                'collaborators': auth_note_db[note_id]['collaborators']
             }
+            return response_data
 
-        response_data = {
-            'status': 'successful',
-            'message': 'Note ACL created'
-        }
-        return response_data
+    response_data = {
+        'status': 'failed',
+        'message': 'Folder ACL does not exist'
+    }
+    return response_data
+
 
 ###################################################
 
